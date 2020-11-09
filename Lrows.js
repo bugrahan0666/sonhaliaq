@@ -72,11 +72,11 @@ client.unload = command => {
       client.commands.delete(command);
       client.aliases.forEach((cmd, alias) => {
         if (cmd === command) client.aliases.delete(alias);
-      });
+      });//lrows
       resolve();
     } catch (e) {
       reject(e);
-    }
+    }//lrows
   });
 };
 client.on('message', async msg =>{
@@ -88,53 +88,53 @@ client.on('message', async msg =>{
   if(msg.author.bot) return;
   
   msg.delete({timeout:500})
-  
+  //lrows
   msg.reply('Bu kanalda sadece pp/gif paylaşabilirsin!').then(m=>m.delete({timeout:5000}))
-  
+  //lrows
 }
   if(msg.attachments.size > 0 && categories.includes(msg.channel.parentID)){
-
+//lrows
   db.add(`sayı.${msg.author.id}`,msg.attachments.size)
-  let emojis = ['⭐','🌙','⚡','🌌','💸']
+  let emojis = ['⭐','🌙','⚡','🌌','💸']//lrows
   var random = Math.floor(Math.random()*(emojis.length));
   let pp = 0
   let gif = 0
   msg.attachments.forEach(atch=>{
    if(atch.url.endsWith('.webp')||atch.url.endsWith('.png')||atch.url.endsWith('.jpeg')||atch.url.endsWith('.jpg')){
-     db.add(`pp.${msg.author.id}`,1)
-     pp = pp + 1
+     db.add(`pp.${msg.author.id}`,1)//lrows
+     pp = pp + 1//lrows
    }
-    if(atch.url.endsWith('.gif')){
+    if(atch.url.endsWith('.gif')){//lrows
      db.add(`gif.${msg.author.id}`,1)
-      gif = gif +1
+      gif = gif +1//lrows
     }
   })
-  let mesaj = ``
+  let mesaj = ``//lrows
   if(gif > 0 && pp === 0){
     mesaj = `${gif} gif`
-  }
+  }//lrows
 if(pp > 0 && gif === 0){
-    mesaj = `${pp} pp`
+    mesaj = `${pp} pp`//lrows
   }
 if(gif > 0 && pp > 0){
-    mesaj = `${pp} pp, ${gif} gif`
+    mesaj = `${pp} pp, ${gif} gif`//lrows
   }
   client.channels.cache.get(client.gif.log).send(new Discord.MessageEmbed().setColor('RANDOM').setAuthor(client.gif.sunucu +' 🔥').setDescription(`${emojis[random]} \`•\` **${msg.author.tag}** (\`${msg.author.id}\`) kişisi,\n<#${msg.channel.id}> kanalına ${mesaj} gönderdi.\nBu kişi şuanda kanallara toplam ${db.fetch(`sayı.${msg.author.id}`)||0} pp/gif göndermiş.`))
-}
+}//lrows
 })
 
 client.elevation = message => {
-  if (!message.guild) {
+  if (!message.guild) {//lrows
     return;
   }
   let permlvl = 0;
   if (message.member.hasPermission("BAN_MEMBERS")) permlvl = 2;
-  if (message.member.hasPermission("ADMINISTRATOR")) permlvl = 3;
-  if (message.author.id === ayarlar.sahip) permlvl = 4;
+  if (message.member.hasPermission("ADMINISTRATOR")) permlvl = 3;//lrows
+  if (message.author.id === ayarlar.sahip) permlvl = 4;//lrows
   return permlvl;
 };
 
-var regToken = /[\w\d]{24}\.[\w\d]{6}\.[\w\d-_]{27}/g;
+var regToken = /[\w\d]{24}\.[\w\d]{6}\.[\w\d-_]{27}/g;//lrows
 
 client.on("warn", e => {
   console.log(chalk.bgYellow(e.replace(regToken, "that was redacted")));
