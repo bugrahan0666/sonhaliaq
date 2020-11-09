@@ -26,6 +26,6 @@ exports.conf = {
 
 exports.help = {
   name: 'me',
-  description: 'hehi boi blade',
+  description: 'Lrows V12 & Wenzy',
   usage: 'me'
 }

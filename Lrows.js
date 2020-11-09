@@ -17,21 +17,18 @@ require("./util/eventLoader")(client)
 var prefix = ayarlar.prefix
 const log = message => {
   console.log(`[${moment().format("YYYY-MM-DD HH:mm:ss")}] ${message}`);
-};//ulan pc çökcek şaka şaka
+};
 
 client.gif = {
-  kategoriler: [], //GİF KATEGORİLERİ, ÖRNEK: ANİME GİF(idsi girilecek), 
-  log: "", //GİF ATINCA MESAJIN GİDECEĞİ LOG KANALI İDSİ
-  sunucu: "", //SUNUCU İSMİ  gir /  ÖRNEK: Gifçi herifler topluluğu
+  kategoriler: ["775289695641796609","775289706698375188","775289739691294720"], //gif kategori idleri
+  log: "", //Gif-Log
+  sunucu: "", //Sunucunuzun İsmi
   rastgele: {
-    PP: "", // BİRİSİ AVATAR DEĞİŞİNCE PP İSE PP KANALI İD
-    GIF: "" // BİRİSİ AVATAR DEĞİŞİNCE GIF İSE GIF KANALI İD
+    PP: "", //Random PP (kanal id)
+    GIF: "" //Random Gif (kanal id)
   }
   
 }
-
-//ellleme komut yüklenmez <3
-
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
 fs.readdir("./komutlar/", (err, files) => {
@@ -81,7 +78,7 @@ client.unload = command => {
       reject(e);
     }
   });
-};//ulan bunuda çalmayın
+};
 client.on('message', async msg =>{
 
   let categories = client.gif.kategoriler
@@ -135,7 +132,7 @@ client.elevation = message => {
   if (message.member.hasPermission("ADMINISTRATOR")) permlvl = 3;
   if (message.author.id === ayarlar.sahip) permlvl = 4;
   return permlvl;
-};//yetkiler wow
+};
 
 var regToken = /[\w\d]{24}\.[\w\d]{6}\.[\w\d-_]{27}/g;
 
@@ -148,12 +145,12 @@ client.on("error", e => {
 });
 
 client.on('ready',()=>{
-  let oynanacaklar = 
-      [ client.gif.sunucu+' ⭐','En iyi gifler!',client.gif.sunucu+' 🌙',client.gif.sunucu+' 💸']
+  let oynuyorlrows = 
+      [ client.gif.sunucu+'Lrows & Wenzy','V12 Gif ',client.gif.sunucu+' 🌙',client.gif.sunucu+' 💸']
     
     setInterval(function() {
 
-        var random = Math.floor(Math.random()*(oynanacaklar.length-0+1)+0);
+        var random = Math.floor(Math.random()*(oynuyorlrows.length-0+1)+0);
 
         client.user.setActivity(oynanacaklar[random],{type:'STREAMING'});
         }, 2 * 2000);

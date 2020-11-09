@@ -52,6 +52,6 @@ exports.conf = {
 
 exports.help = {
   name: 'top',
-  description: 'codeworld blade',
+  description: 'Lrows V12 & Wenzy',
   usage: 'hehi boi'
 }

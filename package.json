@@ -1,11 +1,11 @@
 {
-  "name": "gifbot",
+  "name": "V12 Gif BOT",
   "version": "0.0.1",
-  "author": "blade",
-  "description": "Aman Tanrım Didim<3",
-  "main": "server.js",
+  "author": "Lrows",
+  "description": "V12 Gif BOT created by Lrows",
+  "main": "Lrows.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node Lrows.js"
   },
   "dependencies": {
     "chalk": "^4.0.0",

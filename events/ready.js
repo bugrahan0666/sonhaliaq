@@ -5,5 +5,7 @@ const ayarlar = require('../ayarlar.json');
 
 var prefix = ayarlar.prefix;
 module.exports = client => {
-  client.user.setStatus("dnd");//online yaparsanız aktif olur <3
+  client.user.setStatus("dnd");
 };
+
+//idle = Boşta // dnd = Rahatsız Etmeyin 

@@ -18,11 +18,11 @@ exports.conf = {
   enabled: true,
   guildOnly: false,
   aliases: [],
-  permLevel: 4 // EĞER KOMUT ÇALIŞMAZSA AYARLAR.JSON'a SAHİP YERİNE İDNİZİ GİRİN.
+  permLevel: 4
 };
 
 exports.help = {
   name: 'ekle',
-  description: 'codeworld <3 lord creative <3 <3 <3 <3',
+  description: 'Lrows V12 & Wenzy',
   usage: 'kaldır'
 }

@@ -30,6 +30,6 @@ exports.conf = {
 
 exports.help = {
   name: 'kaldır',
-  description: 'hehi boi xd',
+  description: 'Lrows V12 & Wenzy',
   usage: 'kaldır'
 }

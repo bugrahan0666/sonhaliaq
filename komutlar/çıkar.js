@@ -19,11 +19,11 @@ exports.conf = {
   enabled: true,
   guildOnly: false,
   aliases: [],
-  permLevel: 4 //komut çalışmaz ise sahip id sini ayarlar.json a girin
+  permLevel: 4 
 };
 
 exports.help = {
   name: 'çıkar',
-  description: 'codeworld blade',
+  description: 'Lrows V12 & Wenzy',
   usage: 'kaldır'
 }
