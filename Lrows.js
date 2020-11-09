@@ -21,11 +21,11 @@ const log = message => {
 
 client.gif = {
   kategoriler: ["775289695641796609","775289706698375188","775289739691294720"], //gif kategori idleri
-  log: "", //Gif-Log
-  sunucu: "", //Sunucunuzun İsmi
+  log: "775289889599782922", //Gif-Log (kanal id)
+  sunucu: "lrows", //Sunucunuzun İsmi
   rastgele: {
-    PP: "", //Random PP (kanal id)
-    GIF: "" //Random Gif (kanal id)
+    PP: "775289426217140274", //Random PP (kanal id)
+    GIF: "775289437101228062" //Random Gif (kanal id)
   }
   
 }
@@ -95,7 +95,7 @@ client.on('message', async msg =>{
   if(msg.attachments.size > 0 && categories.includes(msg.channel.parentID)){
 
   db.add(`sayı.${msg.author.id}`,msg.attachments.size)
-  let emojis = ['💸','⭐','🌙','⚡','🌌','✨']//üşendim xd
+  let emojis = ['⭐','🌙','⚡','🌌','💸']
   var random = Math.floor(Math.random()*(emojis.length));
   let pp = 0
   let gif = 0
@@ -152,7 +152,7 @@ client.on('ready',()=>{
 
         var random = Math.floor(Math.random()*(oynuyorlrows.length-0+1)+0);
 
-        client.user.setActivity(oynanacaklar[random],{type:'STREAMING'});
+        client.user.setActivity(oynuyorlrows[random],{type:'STREAMING'});
         }, 2 * 2000);
   setTimeout(()=>{
      client.user.setStatus("idle");
@@ -168,5 +168,5 @@ client.on("userUpdate", async(eski, yeni) => {
     client.channels.cache.get(client.gif.rastgele.GIF).send(new Discord.MessageEmbed().setColor('BLUE').setFooter(`${yeni.tag}`).setImage(avatar));
   };
 });
-console.log('CODARE Bot Başladı!')
-client.login(ayarlar.token).catch(err=> console.error('[HATA] Token Hatalı Lütfen Tokeninizi Değiştirin. Hata yine olursa CodeWorld sunucumuza gelebilirsiniz. discord.gg/codeworld'));
+console.log('Bot Başarıyla Aktif Edildi by Lrows')
+client.login(ayarlar.token).catch(err=> console.error('Tokeni Yenileyip Tekrar Girin'));
