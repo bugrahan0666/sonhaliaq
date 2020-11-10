@@ -25,8 +25,8 @@ client.gif = {
   log: "775605768510242866", //Gif-Log (kanal id)
   sunucu: "BİRSPY GİF", //Sunucunuzun İsmi
   rastgele: {
-    PP: "", //Random PP (kanal id)
-    GIF: "" //Random Gif (kanal id)
+    PP: "775609868819103754", //Random PP (kanal id)
+    GIF: "775609885600907295" //Random Gif (kanal id)
   }
   
 }
@@ -147,7 +147,7 @@ client.on("error", e => {
 
 client.on('ready',()=>{
   let oynuyorlrows = 
-      [ client.gif.sunucu+'Lrows & Wenzy','V12 Gif ',client.gif.sunucu+' 🌙',client.gif.sunucu+' 💸']
+      [ client.gif.sunucu+'PHENTOS','Gif ',client.gif.sunucu+' 🌙',client.gif.sunucu+' 💸']
     
     setInterval(function() {
 
