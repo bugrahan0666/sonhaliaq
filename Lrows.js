@@ -20,12 +20,13 @@ const log = message => {
 };
 
 client.gif = {
-  kategoriler: ["775289695641796609","775289706698375188","775289739691294720"], //gif kategori idleri
-  log: "775289889599782922", //Gif-Log (kanal id)
-  sunucu: "lrows", //Sunucunuzun İsmi
+  kategoriler: ["774738804606107689","774746313694248960","774907209301098506", "774915940412424203", "774916347486142464", "774917077328068620", "774923959422418944", "774925760656965663", "774927428232544266", "774949790248861707", "774950848576094230", "774968665619693609","774969993875554314","774970494541758496","774983175519862814","775080038860193864"], 
+  //gif kategori idleri - random - mka - woman - man - copule - emoji - netflix - cartoon - neon - cars - animal - billie elish
+  log: "775605768510242866", //Gif-Log (kanal id)
+  sunucu: "BİRSPY GİF", //Sunucunuzun İsmi
   rastgele: {
-    PP: "775289426217140274", //Random PP (kanal id)
-    GIF: "775289437101228062" //Random Gif (kanal id)
+    PP: "", //Random PP (kanal id)
+    GIF: "" //Random Gif (kanal id)
   }
   
 }
@@ -168,5 +169,5 @@ client.on("userUpdate", async(eski, yeni) => {
     client.channels.cache.get(client.gif.rastgele.GIF).send(new Discord.MessageEmbed().setColor('BLUE').setFooter(`${yeni.tag}`).setImage(avatar));
   };
 });
-console.log('Bot Başarıyla Aktif Edildi by Lrows')
+console.log('Bot Başarıyla Aktif Edildi by Phentos')
 client.login(ayarlar.token).catch(err=> console.error('Tokeni Yenileyip Tekrar Girin'));
