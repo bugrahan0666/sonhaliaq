@@ -1,9 +1,14 @@
 const { Client, Message, MessageEmbed, Guild } = require("discord.js");
-const phentos = client.veri.kayıtRolleri;
 const db = require("quick.db");
+const Discord = require("discord.js");
+const client = new Discord.Client();
 const kullaniciverisi = new db.table("aKullanici");
 const kullanicicinsiyet = new db.table("aCinsiyet");
-const phentosveri = client.veri;
+let PenthosAyarlar = require("../../phentos-veri.json")
+let IkinciTag = PenthosAyarlar.IkinciTag
+let Tag1 = PenthosAyarlar.Tag
+let Pen1 = PenthosAyarlar.kayıtsızYapanRoller
+
 module.exports = {
     Isim: "kayıtsız",
     Komut: ["kayitsiz"],
@@ -23,16 +28,16 @@ module.exports = {
    * @param {Guild} guild
    */
   onRequest: async function (client, message, args, guild) {
-    let embed = new MessageEmbed().setColor('0x2f3136').setFooter(client.altbaslik).setAuthor(phentosveri.Tag + " " + phentosveri.sunucuIsmi, message.guild.iconURL({dynamic: true, size: 2048}))
-    if((!phentos.kayıtsızRolleri) || !phentos.kayıtsızYapanRoller) return message.channel.send("Sistemsel hata: Rol bulunamadı veya rol bilgileri girilemedi.").then(sil => sil.delete({timeout: 5000}));
-    if(!phentos.kayıtsızYapanRoller.some(rol => message.member.roles.cache.has(rol)) && !message.member.hasPermission('ADMINISTRATOR')) return message.channel.send(`Hata: Bu komutu kullanabilmek için yeterli yetkiye sahip değilsin.`).then(sil => sil.delete({timeout: 5000}));
+    let embed = new MessageEmbed().setColor('0x2f3136').setFooter(client.altbaslik)
+    if((!Pen1) || !Pen1) return message.channel.send("Sistemsel hata: Rol bulunamadı veya rol bilgileri girilemedi.").then(sil => sil.delete({timeout: 5000}));
+    if(!Pen1.some(rol => message.member.roles.cache.has(rol)) && !message.member.hasPermission('ADMINISTRATOR')) return message.channel.send(`Hata: Bu komutu kullanabilmek için yeterli yetkiye sahip değilsin.`).then(sil => sil.delete({timeout: 5000}));
     let uye = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
     if(!uye) return message.channel.send(`Hata: Lütfen bir üye etiketleyin veya Id giriniz!  __Örn:__  \`${client.sistem.a_Prefix}kayıtsız @phentos/ID\``).then(sil => sil.delete({timeout: 5000}));
     if(message.member.roles.highest.position <= uye.roles.highest.position) return message.channel.send(`Hata: Belirlediğiniz üye sizden yetkili veya aynı yetkidesiniz.`).then(sil => sil.delete({timeout: 5000}));
-    if(phentos.kayıtsızRolleri.some(kayıtsız => uye.roles.cache.has(kayıtsız))) return message.channel.send(`Hata: Belirlediğiniz üye zaten sunucumuz da kayıtsız üye neden tekrardan kayıtsıza atmak istiyorsun?`).then(sil => sil.delete({timeout: 5000}));
-    if(uye.manageable) if(phentosveri.IkinciTag) uye.setNickname(`${phentosveri.IkinciTag} İsim | Yaş`).catch();
-    else if(phentos.Tag) uye.setNickname(`${phentosveri.Tag} İsim | Yaş`).catch();
-    let kayıtsız = uye.roles.cache.filter(x => x.managed).map(x => x.id).concat(phentos.kayıtsızRolleri);
+    if(Pen1.some(kayıtsız => uye.roles.cache.has(kayıtsız))) return message.channel.send(`Hata: Belirlediğiniz üye zaten sunucumuz da kayıtsız üye neden tekrardan kayıtsıza atmak istiyorsun?`).then(sil => sil.delete({timeout: 5000}));
+    if(uye.manageable) if(IkinciTag) uye.setNickname(`${IkinciTag} İsim | Yaş`).catch();
+    else if(Pen1.Tag) uye.setNickname(`${Tag1} İsim | Yaş`).catch();
+    let kayıtsız = uye.roles.cache.filter(x => x.managed).map(x => x.id).concat(Pen1);
     await uye.roles.set(kayıtsız)
     kullanicicinsiyet.delete(`veri.${uye.id}.cinsiyet`, `erkek`);
     kullanicicinsiyet.delete(`veri.${uye.id}.cinsiyet`, `kadin`);
