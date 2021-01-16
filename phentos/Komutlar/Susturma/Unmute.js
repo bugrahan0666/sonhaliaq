@@ -10,6 +10,7 @@ const client = new Discord.Client();
 let PhentosAyarlar = require("../../phentos-veri.json")
 let phentos = PhentosAyarlar.Roller 
 let phentoskanal = PhentosAyarlar.Kanallar
+let chatmute = phentoskanal.muteLogKanali
 let No = qDb.table("cezano")
 module.exports = {
     Isim: "unmute",
@@ -51,7 +52,8 @@ module.exports = {
     //${unmuteicon} bunu al 49. satırda ${uye} yazısının soluna yapıştır
     message.channel.send(`${uye} (\`${uye.id}\`), üyesinin ses ve metin kanallarında ki susturulması __kaldırıldı__.`).catch().then(x => x.delete({timeout: 5000}));
     message.react("✅")
-    phentoskanal.send(embed.setDescription(`${uye} (\`${uye.id}\`), adlı üyenin ${message.author} (\`${message.author.id}\`), tarafından ses ve metin kanallarından susturulması kaldırıldı!`)).catch();
+    
+    client.channels.cache.get(phentoskanal.muteLogKanali).send(embed.setDescription(`${uye} (\`${uye.id}\`), adlı üyenin ${message.author} (\`${message.author.id}\`), tarafından ses ve metin kanallarından susturulması kaldırıldı!`)).catch();
     }
 };
 
