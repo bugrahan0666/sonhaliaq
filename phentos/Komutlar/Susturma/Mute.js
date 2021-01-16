@@ -80,7 +80,6 @@ ${uye} kullanıcısı yazılı kanallarda **${sebep}** sebebiyle susturuldu!
       BitisZaman: "Şuan da susturulu",
       Zaman: Date.now() 
     };
-  if(uye.voice.channel) uye.voice.setMute(true).catch();
     if (!muteler.some(j => j.id == uye.id)) {
       cezaDb.push(`sessusturulma`, {id: uye.id,No: cezano, kalkmaZamani: Date.now()+ms(süre)})
       kDb.add(`k.${message.author.id}.sesmute`, 1);
@@ -101,12 +100,10 @@ seslimute.on("collect", async sasa => {
   if (!süre) return message.channel.send(embed.setDescription(`Geçerli bir süre belirtmelisin!`))
 mesaj.reactions.removeAll();
 mesaj.react("✅"); //tik emoji id koyabilirsn
-message.guild.members.cache.get(uye.id).voice.setMute(true).catch();
 mesaj.edit(embed.setDescription(`
 ${uye} kullanıcısı sesli kanallarda **${sebep}** sebebiyle susturuldu!
 `))
 message.guild.channels.cache.get("797445555986759690").send(embed.setDescription(`${uye} üyesi ${message.author} tarafından **${sebep}** sebebiyle **sesli kanallarda** susturuldu!`))
-if(uye.voice.channel) uye.voice.setMute(true).catch();
     if (!mutelers.some(j => j.id == uye.id)) {
     let ceza = {
         No: cezano,

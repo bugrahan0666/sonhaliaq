@@ -7,7 +7,8 @@ const moment = require('moment');
 const ms = require('ms');
 const Discord = require("discord.js");
 const client = new Discord.Client();
-const phentos = client.veri;
+let PhentosAyarlar = require("../../phentos-veri.json")
+let phentos = PhentosAyarlar.Roller 
 let No = qDb.table("cezano")
 module.exports = {
     Isim: "unmute",
@@ -30,8 +31,8 @@ module.exports = {
   onRequest: async function (client, message, args, guild) {
  //   let unmuteicon = client.emojis.cache.get(phentos.Emojiler.susturmakaldirildi)
     let embed = new MessageEmbed().setColor('0x2f3136').setFooter(client.altbaslik).setTimestamp()
-    if(!phentos.Roller.muteHammer.some(rol => message.member.roles.cache.has(rol)) && !message.member.hasPermission('ADMINISTRATOR')) return message.channel.send(`Hata: Bu komutunu kullanabilmek için yeterli yetkiye sahip değilsin.`).then(sil => sil.delete({timeout: 5000}));
- //if(!phentos.Roller.muteHammer.some(rol => message.member.roles.cache.has(rol)) && !message.member.hasPermission('ADMINISTRATOR')) return message.channel.send(`Hata: Bu komutunu kullanabilmek için yeterli yetkiye sahip değilsin.`).then(sil => sil.delete({timeout: 5000}));
+    if(!message.member.roles.cache.has(phentos) && !message.member.hasPermission("ADMINISTRATOR")) return message.reply("Hata: Bu komutunu kullanabilmek için yeterli yetkiye sahip değilsin").then(x => x.delete({timeout: 8000}))
+   // if(!phentos.some(rol => message.member.roles.cache.has(rol)) && !message.member.hasPermission('ADMINISTRATOR')) return message.channel.send(`Hata: Bu komutunu kullanabilmek için yeterli yetkiye sahip değilsin.`).then(sil => sil.delete({timeout: 5000}));
     let uye = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
     if(!uye) return message.channel.send(`Hata: Lütfen bir üye etiketleyin veya Id giriniz!  __Örn:__  \`${client.sistem.a_Prefix}unmute @PHENTOS/ID\``).then(sil => sil.delete({timeout: 5000}));
     if (message.member.roles.highest.position <= uye.roles.highest.position) return message.channel.send(`Hata: Belirttiğin kişi senden üstün veya onunla aynı yetkidesin!`).then(sil => sil.delete({timeout: 5000}));

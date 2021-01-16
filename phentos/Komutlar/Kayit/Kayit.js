@@ -6,7 +6,7 @@ const db = require("quick.db");
 const kullaniciverisi = new db.table("aKullanici");
 const kullanicicinsiyet = new db.table("aCinsiyet");
 const phentos = PenthosAyarlar.kayıtRolleri
-const phentosveri = PenthosAyarlar.veri
+const PhentosTags = PenthosAyarlar.veri
 const Ayarlar = PenthosAyarlar.tepkiId
 const phentoskanallar = PenthosAyarlar.Kanallar
 const tepkiler = [
@@ -45,7 +45,7 @@ module.exports = {
     let isim = args.filter(arg => isNaN(arg)).map(arg => arg.charAt(0).replace('i', "İ").toUpperCase()+arg.slice(1)).join(" ");
     let yaş = args.filter(arg => !isNaN(arg))[0] || undefined;
     if(!isim || !yaş) return message.channel.send(`Hata: Lütfen tüm argümanları doldurunuz!  __Örn:__  \`${client.sistem.a_Prefix}kayıt @phentos/ID isim yaş\``).then(sil => sil.delete({timeout: 5000}));
-        BelirlenenIsim = `${uye.user.username.includes(phentosveri.Tag) ? phentosveri.Tag : (phentosveri.IkinciTag ? phentosveri.IkinciTag : (phentosveri.Tag || ""))} ${isim} | ${yaş}`;
+        BelirlenenIsim = `${uye.user.username.includes(PhentosTags) ? PhentosTags : (PhentosTags ? PhentosTags : (PhentosTags || ""))} ${isim} | ${yaş}`;
         uye.setNickname(`${BelirlenenIsim}`).catch();
         kullaniciverisi.push(`k.${uye.id}.isimler`, {
             Isim: BelirlenenIsim,
@@ -75,7 +75,7 @@ module.exports = {
             await uye.roles.set(kadın)
             message.channel.send(embed.setDescription(`${uye}, adlı üye başarıyla ${message.author}, tarafından **Kadın** olarak kayıt edildi.`)).then(sil => sil.delete({timeout: 15000}));
          } 
-       } if(uye.user.username.includes(phentosveri.Tag)) uye.roles.add(phentos.tagRolu); 
+       } if(uye.user.username.includes(PhentosTags)) uye.roles.add(phentos.tagRolu); 
        if(uye.voice.channel) await uye.voice.setChannel(phentoskanallar.kayitSonrasi);
        message.react("✅"); 
        return;
