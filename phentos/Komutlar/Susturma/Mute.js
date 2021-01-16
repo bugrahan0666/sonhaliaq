@@ -37,20 +37,6 @@ module.exports = {
     let sure = args[1];
     let reason = args.splice(2).join(" ");
     if(!sure || !ms(sure) || !reason) return message.channel.send(`Hata: Lütfen bir süre belirleyin!  __Örn:__  \`${client.sistem.a_Prefix}jail @PHENTOS/ID <1s/1m/1h/1d> <sebep>\``).then(sil => sil.delete({timeout: 5000}));
-     message.channel.send(embed.setDescription(`
-${phentos} isimli kullanıcıya sesli kanallarda mute atmak için <:sesli:799407473634181172>, yazılı kanallarda mute atmak için <:chat:799407473312268339> emojisine tıklamalısın.
-`)).then(async mesaj => {
-  await mesaj.react("799407473634181172"); //sesli id
-  await mesaj.react("799407473312268339"); //yazılı id
-       
-const sesli = (reaction, user) =>
-reaction.emoji.id === "799407473634181172" && user.id === message.author.id; //sesli id
-const yazili = (reaction, user) =>
-reaction.emoji.id === "799407473312268339" && user.id === message.author.id; //yazılı id
-       
-const seslimute = mesaj.createReactionCollector(sesli, { time: 10000 });
-const yazilimute = mesaj.createReactionCollector(yazili, { time: 10000 });
-    yazilimute.on("collect", async sasa => {
     let mutezaman = args[1]
       .replace(`d`," Gün")
       .replace(`s`," Saniye")
@@ -79,7 +65,7 @@ const yazilimute = mesaj.createReactionCollector(yazili, { time: 10000 });
     message.channel.send(`${muteicon} ${uye} kişisi **${reason}** nedeni ile **${mutezaman}** süresince metin kanallarında __susturuldu__. (Ceza Numarası: #${cezano})`).catch().then(sil => sil.delete({timeout: 10000}));
    message.react("✅")
     if(phentos.Kanallar.muteLogKanali && client.channels.cache.has(phentos.Kanallar.muteLogKanali)) client.channels.cache.get(phentos.Kanallar.muteLogKanali).send(embed.setDescription(`${uye} üyesi, ${message.author} tarafından **${mutezaman}** boyunca **${reason}** nedeniyle **${client.tarihsel}** tarihin de metin kanalların da susturuldu.`).setFooter(client.altbaslik + ` • Ceza Numarası: #${cezano}`)).catch();
-    }
+  
      }
 };
 
