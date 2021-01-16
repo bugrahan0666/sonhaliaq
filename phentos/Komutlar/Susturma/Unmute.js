@@ -28,26 +28,28 @@ module.exports = {
    * @param {Guild} guild
    */
   onRequest: async function (client, message, args, guild) {
-    let unmuteicon = client.emojis.cache.get(phentos.Emojiler.susturmakaldirildi)
-    let embed = new MessageEmbed().setColor('0x2f3136').setAuthor(phentos.Tag + " " + phentos.sunucuIsmi, message.guild.iconURL({dynamic: true, size: 2048})).setFooter(client.altbaslik).setTimestamp()
-    if(!phentos.Roller.muteHammer || !phentos.Roller.muteHammer) return message.channel.send("Sistemsel hata: Rol bulunamadı veya rol bilgileri girilemedi.").then(sil => sil.delete({timeout: 5000}));
-    if(!phentos.Roller.muteHammer.some(rol => message.member.roles.cache.has(rol)) && !message.member.hasPermission('ADMINISTRATOR')) return message.channel.send(`Hata: Bu komutunu kullanabilmek için yeterli yetkiye sahip değilsin.`).then(sil => sil.delete({timeout: 5000}));
+ //   let unmuteicon = client.emojis.cache.get(phentos.Emojiler.susturmakaldirildi)
+    let embed = new MessageEmbed().setColor('0x2f3136').setFooter(client.altbaslik).setTimestamp()
+     if(!["795215619892183051"].some(role => message.member.roles.cache.get(role)) && (!message.member.hasPermission("ADMINISTRATOR")))  return message.channel.send(`Hata: Bu komutunu kullanabilmek için yeterli yetkiye sahip değilsin.`).then(sil => sil.delete({timeout: 5000}));
+    //if(!phentos.Roller.muteHammer.some(rol => message.member.roles.cache.has(rol)) && !message.member.hasPermission('ADMINISTRATOR')) return message.channel.send(`Hata: Bu komutunu kullanabilmek için yeterli yetkiye sahip değilsin.`).then(sil => sil.delete({timeout: 5000}));
     let uye = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
     if(!uye) return message.channel.send(`Hata: Lütfen bir üye etiketleyin veya Id giriniz!  __Örn:__  \`${client.sistem.a_Prefix}unmute @PHENTOS/ID\``).then(sil => sil.delete({timeout: 5000}));
     if (message.member.roles.highest.position <= uye.roles.highest.position) return message.channel.send(`Hata: Belirttiğin kişi senden üstün veya onunla aynı yetkidesin!`).then(sil => sil.delete({timeout: 5000}));
     let muteler = cezaDb.get(`susturulma`);
     let sesmuteler = cezaDb.get(`sessusturulma`) || [];
     let kalicimuteler = cezaDb.get(`kalicisusturma`) || [];
-    uye.roles.remove(phentos.Roller.muteRolu).catch();
+    let mutedRoles = `797445574508412948`
+    uye.roles.remove(mutedRoles).catch();
   //if (muteler.some(j => j.id === uye.id)) cezaDb.set(`susturulma`, muteler.filter(x => x.id !== uye.id));
     if (sesmuteler.some(j => j.id === uye.id)) cezaDb.set(`sessusturulma`, sesmuteler.filter(x => x.id !== uye.id));
     if (kalicimuteler.some(j => j.id === uye.id)) cezaDb.set(`kalicisusturma`, kalicimuteler.filter(x => x.id !== uye.id));
-    kDb.set(`ceza.${muteler.No}.BitisZaman`, Date.now());
-    kDb.set(`ceza.${sesmuteler.No}.BitisZaman`, Date.now());
+    kDb.set(`ceza.${message.guild.id}.BitisZaman`, Date.now());
+    kDb.set(`ceza.${message.guild.id}.BitisZaman`, Date.now());
     if (uye.voice.channel) uye.voice.setMute(false);
-    message.channel.send(`${unmuteicon} ${uye} (\`${uye.id}\`), üyesinin ses ve metin kanallarında ki susturulması __kaldırıldı__.`).catch().then(x => x.delete({timeout: 5000}));
+    //${unmuteicon} bunu al 49. satırda ${uye} yazısının soluna yapıştır
+    message.channel.send(`${uye} (\`${uye.id}\`), üyesinin ses ve metin kanallarında ki susturulması __kaldırıldı__.`).catch().then(x => x.delete({timeout: 5000}));
     message.react("✅")
-    if(phentos.Kanallar.muteLogKanali && client.channels.cache.has(phentos.Kanallar.muteLogKanali)) client.channels.cache.get(phentos.Kanallar.muteLogKanali).send(embed.setDescription(`${uye} (\`${uye.id}\`), adlı üyenin ${message.author} (\`${message.author.id}\`), tarafından ses ve metin kanallarından susturulması kaldırıldı!`)).catch();
+  // if(phentos.Kanallar.muteLogKanali && client.channels.cache.has(phentos.Kanallar.muteLogKanali)) client.channels.cache.get(phentos.Kanallar.muteLogKanali).send(embed.setDescription(`${uye} (\`${uye.id}\`), adlı üyenin ${message.author} (\`${message.author.id}\`), tarafından ses ve metin kanallarından susturulması kaldırıldı!`)).catch();
     }
 };
 
