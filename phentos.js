@@ -41,7 +41,7 @@ fs.readdir("./phentos/Komutlar/", (err, dirs) => {
         referans.onLoad(client);
         client.on(referans.Etkinlik, referans.onRequest);
       console.log(
-        `[~ ACAR~ ] (${fileName}) isimli etkinlik yüklendi.`
+        `PHENTOSCUM (${fileName}) isimli etkinlik yüklendi.`
       );
     });
   });

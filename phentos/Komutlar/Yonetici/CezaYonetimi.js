@@ -4,7 +4,7 @@ const cezaDb = new qDb.table("aCezalar");
 const cezaNoDb = new qDb.table("aVeri");
 const kDb = new qDb.table("aKullanici");
 const moment = require('moment');
-const acar = client.veri;
+const phentos = client.veri;
 module.exports = {
     Isim: "ceza",
     Komut: ["cezalar"],
@@ -24,7 +24,7 @@ module.exports = {
    * @param {Guild} guild
    */
   onRequest: async function (client, message, args, guild) {
-  let embed = new MessageEmbed().setColor('0x2f3136').setAuthor(acar.Tag + " " + acar.sunucuIsmi, message.guild.iconURL({dynamic: true, size: 2048}))
+  let embed = new MessageEmbed().setColor('0x2f3136').setAuthor(phentos.Tag + " " + phentos.sunucuIsmi, message.guild.iconURL({dynamic: true, size: 2048}))
   let kullanici = message.mentions.users.first() || client.users.cache.get(args[0])|| (args.length > 0 ? client.users.cache.filter(e => e.username.toLowerCase().includes(args.join(" ").toLowerCase())).first(): message.author) || message.author;
   
   let sorgu = args[0];
@@ -81,7 +81,7 @@ module.exports = {
   };  
 
   if(sorgu == "temizle") {
-    if(!message.member.roles.cache.has(acar.Roller.kurucuRolu)) return message.channel.send(`Hata: Bu komutunu kullanabilmek için herhangi bir yetkiye sahip değilsin.`).then(x => x.delete({timeout: 5000})); 
+    if(!message.member.roles.cache.has(phentos.Roller.kurucuRolu)) return message.channel.send(`Hata: Bu komutunu kullanabilmek için herhangi bir yetkiye sahip değilsin.`).then(x => x.delete({timeout: 5000})); 
   let cn = args[1]
   if(!cn) return message.channel.send(`Hata: Lütfen bir üye Id giriniz!  __Örn:__  \`${client.sistem.a_Prefix}ceza temizle <#Ceza-No>\``).then(x => x.delete({timeout: 5000}));
   let ceza = await kDb.fetch(`ceza.${args[1]}`)
@@ -99,7 +99,7 @@ module.exports = {
   return  
 };
 if(sorgu == "sıfırla") {
-  if(!message.member.roles.cache.has(acar.Roller.kurucuRolu)) return message.channel.send(`Hata: Bu komutunu kullanabilmek için herhangi bir yetkiye sahip değilsin.`).then(x => x.delete({timeout: 5000})); 
+  if(!message.member.roles.cache.has(phentos.Roller.kurucuRolu)) return message.channel.send(`Hata: Bu komutunu kullanabilmek için herhangi bir yetkiye sahip değilsin.`).then(x => x.delete({timeout: 5000})); 
   kDb.delete(`ceza`);
   cezaNoDb.delete(`cezano`) 
   message.channel.send(`Bu sunucunun (\`${client.sistem.a_sunucuId}\`) tüm üyelerin ceza ve sunucu ceza numaralarının bilgileri komple temizlendi!`).then(x => x.delete({timeout: 5000})); 

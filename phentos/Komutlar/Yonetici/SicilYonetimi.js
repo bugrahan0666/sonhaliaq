@@ -4,11 +4,11 @@ const cezaDb = new qDb.table("aCezalar");
 const cezaNoDb = new qDb.table("aVeri");
 const kDb = new qDb.table("aKullanici");
 const moment = require('moment');
-const acar = client.veri;
+const phentos = client.veri;
 module.exports = {
     Isim: "sicil",
     Komut: ["sicil"],
-    Kullanim: "sicil temizle ID / sicil @acar/ID",
+    Kullanim: "sicil temizle ID / sicil @phentos/ID",
     Aciklama: "Belirlenen üyenin ceza geçmişini ve ceza numaralarını gösterir.",
     Kategori: "Yönetim Komutları",
     TekSunucu: true,
@@ -87,7 +87,7 @@ module.exports = {
    * @param {Guild} guild
    */
   onRequest: async function (client, message, args, guild) {
-  let embed = new MessageEmbed().setColor('0x2f3136').setAuthor(acar.Tag + " " + acar.sunucuIsmi, message.guild.iconURL({dynamic: true, size: 2048})).setFooter(client.altbaslik)
+  let embed = new MessageEmbed().setColor('0x2f3136').setAuthor(phentos.Tag + " " + phentos.sunucuIsmi, message.guild.iconURL({dynamic: true, size: 2048})).setFooter(client.altbaslik)
   let kullanici = message.mentions.users.first() || client.users.cache.get(args[0])|| (args.length > 0 ? client.users.cache.filter(e => e.username.toLowerCase().includes(args.join(" ").toLowerCase())).first(): message.author) || message.author;
   let uye = message.guild.member(kullanici);
   let sicil = kDb.get(`k.${uye.id}.sicil`) || [];
@@ -103,7 +103,7 @@ module.exports = {
   let sorgu = args[0];
    
   if(sorgu == "temizle" || sorgu == "sıfırla") {
-    if(!message.member.roles.cache.has(acar.Roller.kurucuRolu)) return message.channel.send(`Hata: Bu komutunu kullanabilmek için herhangi bir yetkiye sahip değilsin.`).then(x => x.delete({timeout: 5000}));
+    if(!message.member.roles.cache.has(phentos.Roller.kurucuRolu)) return message.channel.send(`Hata: Bu komutunu kullanabilmek için herhangi bir yetkiye sahip değilsin.`).then(x => x.delete({timeout: 5000}));
     let kullanicitemizle = client.users.cache.get(args[1])
     let uye2 = message.guild.member(kullanicitemizle);
   if(!uye2) return message.channel.send(`Hata: Lütfen bir üye Id giriniz!  __Örn:__  \`${client.sistem.a_Prefix}sicil temizle <ID>\``).then(x => x.delete({timeout: 5000}));

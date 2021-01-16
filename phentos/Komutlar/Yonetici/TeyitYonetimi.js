@@ -4,7 +4,7 @@ const cezaDb = new qDb.table("aCezalar");
 const cezaNoDb = new qDb.table("aVeri");
 const kDb = new qDb.table("aKullanici");
 const moment = require('moment');
-const acar = client.veri;
+const phentos = client.veri;
 module.exports = {
     Isim: "teyit",
     Komut: ["teyitlerim"],

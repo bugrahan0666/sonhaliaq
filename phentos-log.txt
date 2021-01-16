@@ -1,0 +1,36 @@
+PHENTOSCUM (phentosCezaCheck.js) isimli etkinlik yüklendi.
+PHENTOSCUM (phentosKalkmazBan.js) isimli etkinlik yüklendi.
+PHENTOSCUM (phentosMemberJoinServer.js) isimli etkinlik yüklendi.
+PHENTOSCUM (phentosMemberLeave.js) isimli etkinlik yüklendi.
+PHENTOSCUM (phentosMessage.js) isimli etkinlik yüklendi.
+PHENTOSCUM (phentosReady.js) isimli etkinlik yüklendi.
+PHENTOSCUM (phentosSesMute.js) isimli etkinlik yüklendi.
+PHENTOSCUM (phentosTagTarama.js) isimli etkinlik yüklendi.
+PHENTOSCUM (phentosUserUpdate.js) isimli etkinlik yüklendi.
+PHENTOSCUM (phentosYasakliTag.js) isimli etkinlik yüklendi.
+Phentoscuğumun (Cezali/Jail.js) adlı komut çalışır hale getirildi.
+Phentoscuğumun (Cezali/PermJail.js) adlı komut çalışır hale getirildi.
+Phentoscuğumun (Cezali/UnJail.js) adlı komut çalışır hale getirildi.
+Phentoscuğumun (Cezali/Uyari.js) adlı komut çalışır hale getirildi.
+Phentoscuğumun (Diger/Booster.js) adlı komut çalışır hale getirildi.
+Phentoscuğumun (Diger/KalkmazBan.js) adlı komut çalışır hale getirildi.
+Phentoscuğumun (Diger/SelfKontrol.js) adlı komut çalışır hale getirildi.
+Phentoscuğumun (Diger/Snipe.js) adlı komut çalışır hale getirildi.
+Phentoscuğumun (Diger/Temizle.js) adlı komut çalışır hale getirildi.
+Phentoscuğumun (Diger/Yardım.js) adlı komut çalışır hale getirildi.
+Phentoscuğumun (Kayit/Isim.js) adlı komut çalışır hale getirildi.
+Phentoscuğumun (Kayit/Isimsorgu.js) adlı komut çalışır hale getirildi.
+Phentoscuğumun (Kayit/Kayit.js) adlı komut çalışır hale getirildi.
+Phentoscuğumun (Kayit/Kayitsiz.js) adlı komut çalışır hale getirildi.
+Phentoscuğumun (Susturma/Mute.js) adlı komut çalışır hale getirildi.
+Phentoscuğumun (Susturma/PermMute.js) adlı komut çalışır hale getirildi.
+Phentoscuğumun (Susturma/SesMute.js) adlı komut çalışır hale getirildi.
+Phentoscuğumun (Susturma/Unmute.js) adlı komut çalışır hale getirildi.
+Phentoscuğumun (Yasaklama/Ban.js) adlı komut çalışır hale getirildi.
+Phentoscuğumun (Yasaklama/Kick.js) adlı komut çalışır hale getirildi.
+Phentoscuğumun (Yasaklama/Unban.js) adlı komut çalışır hale getirildi.
+Phentoscuğumun (Yonetici/CezaYonetimi.js) adlı komut çalışır hale getirildi.
+Phentoscuğumun (Yonetici/Isimtemizle.js) adlı komut çalışır hale getirildi.
+Phentoscuğumun (Yonetici/SicilYonetimi.js) adlı komut çalışır hale getirildi.
+Phentoscuğumun (Yonetici/TeyitYonetimi.js) adlı komut çalışır hale getirildi.
+[2021-01-16 12:13:59] Komut dosyaları başarıyla tamamlandı bot aktif edildi.
