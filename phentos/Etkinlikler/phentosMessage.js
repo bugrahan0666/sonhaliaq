@@ -18,7 +18,7 @@ module.exports = {
       .substring(message.client.sistem.a_Prefix.length)
       .split(" ");
     let Komut = Args[0];
-    let Acar = message.client;
+    let P = message.client;
     Args = Args.splice(1);
     let Baslatici;
     let guild = message.guild || null;

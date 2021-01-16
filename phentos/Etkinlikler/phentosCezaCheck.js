@@ -23,22 +23,22 @@ module.exports = {
   };
 
   function yasakKontrolEt() {
-    let acar = client.veri;
+    let phentos = client.veri;
     let sid = client.sistem.a_sunucuId;
     //Cezalı (Check İşlemi)
     let cezalılar = cezaDb.get("cezalı") || [];
     let kalıcıcezalılar = cezaDb.get("kalıcıcezalı") || [];
     for (let kisi of kalıcıcezalılar) {
         let uye = client.guilds.cache.get(sid).members.cache.get(kisi.slice(1));
-        if (uye && !uye.roles.cache.has(acar.Roller.jailRolu)) uye.roles.set(uye.roles.cache.has(acar.Roller.boosterRolu) ? [acar.Roller.boosterRolu, acar.Roller.jailRolu] : [acar.Roller.jailRolu]).catch();
+        if (uye && !uye.roles.cache.has(phentos.Roller.jailRolu)) uye.roles.set(uye.roles.cache.has(phentos.Roller.boosterRolu) ? [phentos.Roller.boosterRolu, phentos.Roller.jailRolu] : [phentos.Roller.jailRolu]).catch();
       };
     for (let ceza of cezalılar) {
         let uye = client.guilds.cache.get(sid).members.cache.get(ceza.id);
         if (Date.now() >= ceza.kalkmaZamani) {
           cezaDb.set("cezalı", cezalılar.filter(x => x.id !== ceza.id));
-          let erkeks = uye.roles.cache.filter(x => x.managed).map(x => x.id).concat(acar.kayıtRolleri.erkekRolleri);
-          let teyitsiz = uye.roles.cache.filter(x => x.managed).map(x => x.id).concat(acar.kayıtRolleri.kayıtsızRolleri);
-          let kizs = uye.roles.cache.filter(x => x.managed).map(x => x.id).concat(acar.kayıtRolleri.kadinRolleri);
+          let erkeks = uye.roles.cache.filter(x => x.managed).map(x => x.id).concat(phentos.kayıtRolleri.erkekRolleri);
+          let teyitsiz = uye.roles.cache.filter(x => x.managed).map(x => x.id).concat(phentos.kayıtRolleri.kayıtsızRolleri);
+          let kizs = uye.roles.cache.filter(x => x.managed).map(x => x.id).concat(phentos.kayıtRolleri.kadinRolleri);
           let cinsiyet  = kullanicicinsiyet.get(`veri.${uye.id}.cinsiyet`);
           kullaniciverisi.set(`ceza.${ceza.No}.BitisZaman`, Date.now())
           if(cinsiyet == `erkek`) {
@@ -59,7 +59,7 @@ module.exports = {
             }
            }
         } else {
-          if (uye && !uye.roles.cache.has(acar.Roller.jailRolu)) uye.roles.set(uye.roles.cache.has(acar.Roller.boosterRolu) ? [acar.Roller.boosterRolu, acar.Roller.jailRolu] : [acar.Roller.jailRolu]).catch();
+          if (uye && !uye.roles.cache.has(phentos.Roller.jailRolu)) uye.roles.set(uye.roles.cache.has(phentos.Roller.boosterRolu) ? [phentos.Roller.boosterRolu, phentos.Roller.jailRolu] : [phentos.Roller.jailRolu]).catch();
         };
       };
 
@@ -72,15 +72,15 @@ module.exports = {
               let uye = client.guilds.cache.get(sid).members.cache.get(ceza.id);
                  if (Date.now() >= ceza.kalkmaZamani) {
                       cezaDb.set("susturulma", sürelisusturma.filter(x => x.id !== ceza.id));
-                     if (uye && uye.roles.cache.has(acar.Roller.muteRolu)) uye.roles.remove(acar.Roller.muteRolu).catch();
+                     if (uye && uye.roles.cache.has(phentos.Roller.muteRolu)) uye.roles.remove(phentos.Roller.muteRolu).catch();
                      kullaniciverisi.set(`ceza.${ceza.No}.BitisZaman`, Date.now())
                 } else {
-                  if (uye && !uye.roles.cache.has(acar.Roller.muteRolu)) uye.roles.add(acar.Roller.muteRolu).catch();
+                  if (uye && !uye.roles.cache.has(phentos.Roller.muteRolu)) uye.roles.add(phentos.Roller.muteRolu).catch();
                 };
             };
             for (let kisi of kalicisusturulma) {
              let uye = client.guilds.cache.get(sid).members.cache.get(kisi.slice(1));
-                if (uye && !uye.roles.cache.has(acar.Roller.muteRolu)) uye.roles.add(acar.Roller.muteRolu).catch();
+                if (uye && !uye.roles.cache.has(phentos.Roller.muteRolu)) uye.roles.add(phentos.Roller.muteRolu).catch();
             };
             for (let ceza of sessusturulma) {
                 let uye = client.guilds.cache.get(sid).members.cache.get(ceza.id);

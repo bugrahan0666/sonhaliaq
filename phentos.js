@@ -7,24 +7,24 @@ moment.locale('tr')
 const fs = require("fs");
 client.komutlar = new Collection();
 client.komut = new Collection();
-client.veri = require("./acar/acar-veri.json");
-client.sistem = require("./acar/acar-ayar.json");
+client.veri = require("./phentos/phentos-veri.json");
+client.sistem = require("./phentos/phentos-ayar.json");
 client.modüller = {}; 
-client.altbaslik = client.veri.Tag + " " + client.veri.sunucuUfakIsim + " Developer by ACAR"
-fs.readdir("./acar/Komutlar/", (err, dirs) => {
+client.altbaslik = client.veri.Tag + " " + client.veri.sunucuUfakIsim + "#NoNamePhentos"
+fs.readdir("./phentos/Komutlar/", (err, dirs) => {
     if (err) console.error(err);
     dirs.forEach(dir => {
       if (dir.endsWith(".js")) {
-        fs.rename("./acar/Komutlar/" + dir, "./acar/Komutlar/Diger/" + dir, err =>
+        fs.rename("./phentos/Komutlar/" + dir, "./phentos/Komutlar/Diger/" + dir, err =>
           console.log(err)
         );
       } else
-        fs.readdir("./acar/Komutlar/" + dir, (err2, files) => {
+        fs.readdir("./phentos/Komutlar/" + dir, (err2, files) => {
           if (err) console.error(err2);
           files.forEach(f => {
             if (!f.endsWith(".js")) return;
-            let referans = require(`./acar/Komutlar/${dir}/${f}`);
-            console.log(`[~ ACAR ~] (${dir}/${f}) adlı komut çalışır hale getirildi.`)
+            let referans = require(`./phentos/Komutlar/${dir}/${f}`);
+            console.log(`Phentoscuğumun (${dir}/${f}) adlı komut çalışır hale getirildi.`)
             if(typeof referans.onLoad === "function") referans.onLoad(client);
             client.komutlar.set(referans.Isim, referans);
             if (referans.Komut) {
@@ -34,10 +34,10 @@ fs.readdir("./acar/Komutlar/", (err, dirs) => {
         });
     });
   });
-  fs.readdir("./acar/Etkinlikler/", (err, files) => {
+  fs.readdir("./phentos/Etkinlikler/", (err, files) => {
     if (err) return console.myTime(err);
     files.forEach(fileName => {
-      let referans = require("./acar/Etkinlikler/" + fileName);
+      let referans = require("./phentos/Etkinlikler/" + fileName);
         referans.onLoad(client);
         client.on(referans.Etkinlik, referans.onRequest);
       console.log(
@@ -99,4 +99,4 @@ client.emoji = function(x) {
 };
 
 
-client.login(client.sistem.a_Token).catch(err => console.error("[~ ACAR ~] Discord API Botun tokenini doğrulayamadı."));
+client.login(client.sistem.a_Token).catch(err => console.error("PHENTOSCUM Discord API Botun tokenini doğrulayamadı."));

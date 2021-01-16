@@ -1,9 +1,9 @@
-﻿const {Client, WebhookClient} = require("discord.js");
+const {Client, WebhookClient} = require("discord.js");
 const qDb = require("quick.db");
 const db = new qDb.table("ayarlar");
 const cezaDb = new qDb.table("aCezalar");
 const moment = require('moment');
-const acarhook = new WebhookClient(client.veri.hosgeldinSistemi.webhookID, client.veri.hosgeldinSistemi.webhookTOKEN);
+const phentoshook = new WebhookClient(client.veri.hosgeldinSistemi.webhookID, client.veri.hosgeldinSistemi.webhookTOKEN);
 module.exports = {
     Etkinlik: "guildMemberAdd",
     /**
@@ -19,10 +19,10 @@ module.exports = {
             member.roles.add(client.veri.Roller.botcuRolu) 
             return
         };
-        let acarkalkmazban = qDb.get(`akb_${member.guild.id}`)
-        if(acarkalkmazban && acarkalkmazban.some(id => `k${member.user.id}` === id)) return;
-        let acar = client.veri;
-        let acarveri = db.get("ayar") || {};
+        let phentoskalkmazban = qDb.get(`akb_${member.guild.id}`)
+        if(phentoskalkmazban && phentoskalkmazban.some(id => `k${member.user.id}` === id)) return;
+        let phentos = client.veri;
+        let phentosveri = db.get("ayar") || {};
         let cezalılar = cezaDb.get("cezalı") || [];
         let kalıcıcezalılar = cezaDb.get("kalıcıcezalı") || [];
         let yasakTaglilar = cezaDb.get("yasakTaglilar") || [];
@@ -30,21 +30,21 @@ module.exports = {
         let sürelisusturma = cezaDb.get("susturulma") || [];
         let sessusturulma = cezaDb.get("sessusturulma") || [];
         let guvenili = Date.now()-member.user.createdTimestamp < 1000*60*60*24*7;
-        if (acarveri.yasakTaglar && !acarveri.yasakTaglar.some(tag => member.user.username.includes(tag)) && yasakTaglilar.some(x => x.includes(member.id))) await cezaDb.set('yasakTaglilar', yasakTaglilar.filter(x => !x.includes(member.id)));
+        if (phentosveri.yasakTaglar && !phentosveri.yasakTaglar.some(tag => member.user.username.includes(tag)) && yasakTaglilar.some(x => x.includes(member.id))) await cezaDb.set('yasakTaglilar', yasakTaglilar.filter(x => !x.includes(member.id)));
         if(cezalılar.some(x => x.includes(member.id)) || kalıcıcezalılar.some(x => x.id === member.id)){
-        if(acar.Roller.jailRolu) member.roles.set([acar.Roller.jailRolu]).catch();
-        } else if (acarveri.yasakTaglar && acarveri.yasakTaglar.some(tag => member.user.username.includes(tag))) {
-         if(acar.Roller.yasakliTagRolu) member.roles.set([acar.Roller.yasakliTagRolu]).catch();
+        if(phentos.Roller.jailRolu) member.roles.set([phentos.Roller.jailRolu]).catch();
+        } else if (phentosveri.yasakTaglar && phentosveri.yasakTaglar.some(tag => member.user.username.includes(tag))) {
+         if(phentos.Roller.yasakliTagRolu) member.roles.set([phentos.Roller.yasakliTagRolu]).catch();
     if (!yasakTaglilar.some(id => id.includes(member.id))) cezaDb.push('yasakTaglilar', `y${member.id}`);
-    member.send(`**${acar.Tag} ${acar.sunucuIsmi}** Yasak tag'da bulunduğunuz için otomatik olarak cezalıya atıldınız tagı çıkartana kadar cezalıda kalmaya devam ediceksin.`).catch();
+    member.send(`**${phentos.Tag} ${phentos.sunucuIsmi}** Yasak tag'da bulunduğunuz için otomatik olarak cezalıya atıldınız tagı çıkartana kadar cezalıda kalmaya devam ediceksin.`).catch();
   } else if (guvenili) {
-          if(acar.Roller.supheliRolu) member.roles.set([acar.Roller.supheliRolu]).catch();
-          if(acar.Kanallar.supheliLogKanali && member.guild.channels.cache.has(acar.Kanallar.supheliLogKanali)) return;
-        } else if(acar.kayıtRolleri.kayıtsızRolleri) member.roles.add(acar.kayıtRolleri.kayıtsızRolleri).catch();
-        if(sürelisusturma.some(x => x.id === member.id) || kalicisusturulma.some(x => x.includes(member.id))) member.roles.add(acar.Roller.muteRolu).catch();
+          if(phentos.Roller.supheliRolu) member.roles.set([phentos.Roller.supheliRolu]).catch();
+          if(phentos.Kanallar.supheliLogKanali && member.guild.channels.cache.has(phentos.Kanallar.supheliLogKanali)) return;
+        } else if(phentos.kayıtRolleri.kayıtsızRolleri) member.roles.add(phentos.kayıtRolleri.kayıtsızRolleri).catch();
+        if(sürelisusturma.some(x => x.id === member.id) || kalicisusturulma.some(x => x.includes(member.id))) member.roles.add(phentos.Roller.muteRolu).catch();
         if(sessusturulma.some(x => x.id === member.id) && member.voice.channel) member.voice.setMute(true).catch();
-        if(acar.IkinciTag) member.setNickname(`${acar.IkinciTag} İsim | Yaş`).catch();
-        else if(acar.Tag) member.setNickname(`${acar.Tag} İsim | Yaş`).catch();
+        if(phentos.IkinciTag) member.setNickname(`${phentos.IkinciTag} İsim | Yaş`).catch();
+        else if(phentos.Tag) member.setNickname(`${phentos.Tag} İsim | Yaş`).catch();
         var gün = moment(member.user.createdAt).format('DD')
         if(moment(member.user.createdAt).format('DD') === '01') {
            var gün = '1'
@@ -110,11 +110,11 @@ module.exports = {
         if(moment(member.user.createdAt).format('MM') === '12') {
             var tarih = `${gün} Aralık ${moment(member.user.createdAt).format('YYYY')} ${moment(member.user.createdAt).format('HH')}:${moment(member.user.createdAt).format('mm')}`
         }
-        acarhook.send(`
-${client.emojis.cache.get(acar.Emojiler.hosgeldinGif1)} ${acar.sunucuUfakIsim} Sunucusuna Hoşgeldin!\n
-${client.emojis.cache.get(acar.Emojiler.hosgeldinGif2)} ${member} (\`${member.id}\`) hesabın __${tarih}__ tarihinde ${client.gecmisTarihHesaplama(member.user.createdAt)} oluşturulmuş.\n
-${client.emojis.cache.get(acar.Emojiler.hosgeldinGif3)} Ailemiz seninle birlikte **${member.guild.memberCount}** kişiye ulaştı! tagımızı alarak bizlere destek olabilirsin, <@&${acar.kayıtRolleri.kayıtYapanRoller}> rolüne sahip yetkililer senin ile ilgilenecektir.\n
-${client.emojis.cache.get(acar.Emojiler.hosgeldinGif4)} Sunucu kurallarımız <#${acar.Kanallar.kurallarKanal}> kanalında belirtilmiştir. Unutma sunucu içerisinde ki ceza işlemlerin kuralları okuduğunu varsayarak gerçekleştirilecek.\n
+        phentoshook.send(`
+${client.emojis.cache.get(phentos.Emojiler.hosgeldinGif1)} ${phentos.sunucuUfakIsim} Sunucusuna Hoşgeldin!\n
+${client.emojis.cache.get(phentos.Emojiler.hosgeldinGif2)} ${member} (\`${member.id}\`) hesabın __${tarih}__ tarihinde ${client.gecmisTarihHesaplama(member.user.createdAt)} oluşturulmuş.\n
+${client.emojis.cache.get(phentos.Emojiler.hosgeldinGif3)} Ailemiz seninle birlikte **${member.guild.memberCount}** kişiye ulaştı! tagımızı alarak bizlere destek olabilirsin, <@&${acar.kayıtRolleri.kayıtYapanRoller}> rolüne sahip yetkililer senin ile ilgilenecektir.\n
+${client.emojis.cache.get(phentos.Emojiler.hosgeldinGif4)} Sunucu kurallarımız <#${phentos.Kanallar.kurallarKanal}> kanalında belirtilmiştir. Unutma sunucu içerisinde ki ceza işlemlerin kuralları okuduğunu varsayarak gerçekleştirilecek.\n
 `); 
     }
   };

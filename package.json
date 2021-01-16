@@ -1,10 +1,10 @@
 {
-  "name": "acar#0001 - Moderasyon Alt Yapı",
+  "name": "Phentos#4545 Kayıt Mod Altyapı",
   "version": "1.0.0",
   "description": "",
-  "main": "acar.js",
+  "main": "phentos.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node phentos.js"
   },
   "dependencies": {
     "chalk": "^4.0.0",
@@ -21,8 +21,8 @@
   },
   "license": "MIT",
   "keywords": [
-    "YARRAKKKKKKK qwşlekqwşlek"
+    "#NoNamePhentos"
   ],
   "devDependencies": {},
-  "author": "root@acar"
+  "author": "Phentos#4545"
 }

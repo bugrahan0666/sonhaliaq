@@ -13,7 +13,7 @@ module.exports = {
      * @param {GuildMember} member
      */
     onRequest: async function (member) {
-        let acar = client.veri
+        let phentos = client.veri
         if(member.user.bot) return;
         kullanicicinsiyet.delete(`veri.${member.id}.cinsiyet`, `erkek`);
         kullanicicinsiyet.delete(`veri.${member.id}.cinsiyet`, `kadin`);
