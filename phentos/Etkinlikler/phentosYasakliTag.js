@@ -1,4 +1,5 @@
-const { GuildMember, MessageEmbed,Client} = require("discord.js");
+const { GuildMember, Message, MessageEmbed, Client} = require("discord.js");
+const client = require("discord.js")
 const qDb = require("quick.db");
 const db = new qDb.table("ayarlar");
 const cezaDb = new qDb.table("aCezalar");
@@ -36,8 +37,8 @@ module.exports = {
     if (uye && !yasakTaglar.some(tag => uye.user.username.includes(tag)) && uye.roles.cache.has(phentos.Roller.yasakliTagRolu)) {
       db.set("yasakTaglilar", yasakTaglilar.filter(x => !x.includes(uye.id)));
       uye.roles.set(phentos.kayıtRolleri.kayıtsızRolleri).catch();
-      if(phentos.IkinciTag) uye.setNickname(`${phentos.IkinciTag} İsim | Yaş`).catch();
-      else if(phentos.Tag) uye.setNickname(`${phentos.Tag} İsim | Yaş`).catch();
+      if(phentos.IkinciTag) message.guild.members.cache.get(uye.id).setNickname(`${phentos.IkinciTag} İsim | Yaş`).catch();
+      else if(phentos.Tag) message.guild.members.cache.get(uye.id).setNickname(`${phentos.Tag} İsim | Yaş`).catch();
     };
   };
   };
