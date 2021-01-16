@@ -25,10 +25,8 @@ module.exports = {
    * @param {Guild} guild
    */
   onRequest: async function (client, message, args, guild) {
-    let muteicon = client.emojis.cache.get(phentos.Emojiler.susturuldu)
     let cezano = cezaNoDb.get(`cezano.${client.sistem.a_SunucuID}`) + 1;
-    if(!phentos.Roller.muteHammer || !phentos.Roller.muteHammer) return message.channel.send("Sistemsel hata: Rol bulunamadı veya rol bilgileri girilemedi.").then(sil => sil.delete({timeout: 5000}));
-    if(!phentos.Roller.muteHammer.some(rol => message.member.roles.cache.has(rol)) && !message.member.hasPermission('ADMINISTRATOR')) return message.channel.send(`Hata: Bu komutunu kullanabilmek için yeterli yetkiye sahip değilsin.`).then(sil => sil.delete({timeout: 5000}));
+    if(!["795215619892183051"].some(role => message.member.roles.cache.get(role)) && (!message.member.hasPermission("ADMINISTRATOR")))  return message.channel.send(`Hata: Bu komutunu kullanabilmek için yeterli yetkiye sahip değilsin.`).then(sil => sil.delete({timeout: 5000}));
 let reawEmbed = new MessageEmbed().setFooter("Reawen ❤️ Phentos").setColor("010000").setTimestamp()  
 let embed = reawEmbed;
 let muteler = cezaDb.get(`susturulma`) || [];
@@ -99,7 +97,6 @@ reawMember.roles.remove("797445574508412948")
 
 seslimute.on("collect", async sasa => {
   if (!süre) return message.channel.send(embed.setDescription(`Geçerli bir süre belirtmelisin!`))
-if (!reawMember.voice.channel) return message.channel.send(embed.setDescription(`${reawMember} ses kanalında değil!`))
 mesaj.reactions.removeAll();
 mesaj.react("✅"); //tik emoji id koyabilirsn
 message.guild.members.cache.get(reawMember.id).voice.setMute(true).catch();
@@ -107,13 +104,35 @@ mesaj.edit(embed.setDescription(`
 ${reawMember} kullanıcısı sesli kanallarda **${sebep}** sebebiyle susturuldu!
 `))
 message.guild.channels.cache.get("797445555986759690").send(embed.setDescription(`${reawMember} üyesi ${message.author} tarafından **${sebep}** sebebiyle **sesli kanallarda** susturuldu!`))
-setTimeout(() => {
+if(reawMember.voice.channel) reawMember.voice.setMute(true).catch();
+    if (!muteler.some(j => j.id == reawMember.id)) {
+    let ceza = {
+        No: cezano,
+        Cezalanan: reawMember.id,
+        Yetkili: message.author.id,
+        Tip: "VMUTE",
+        Tur: "Seste Susturulma",
+        Sebep: sebep,
+        AtilanSure: süre,
+        BitisZaman: "Şuan da seste susturulu",
+        Zaman: Date.now() 
+      };
+    if(reawMember.voice.channel) reawMember.voice.setMute(true).catch();
+    if (!muteler.some(j => j.id == reawMember.id)) {
+      cezaDb.push(`sessusturulma`, {id: reawMember.id,No: cezano, kalkmaZamani: Date.now()+ms(süre)})
+      kDb.add(`k.${message.author.id}.sesmute`, 1);
+      kDb.push(`k.${reawMember.id}.sicil`, ceza);
+      kDb.set(`ceza.${cezano}`, ceza)
+    }
+  
+  setTimeout(() => {
 
 reawMember.voice.setMute(false)
       message.channel.send(embed.setDescription(`${reawMember} adlı üyenin mutesi süresi dolduğu için açıldı!`))
 
     }, ms(süre))
-});
+}});
+
   });
 }
 };
