@@ -32,12 +32,12 @@ let embed = reawEmbed;
 let muteler = cezaDb.get(`susturulma`) || [];
 let mutelers = cezaDb.get(`sessusturulma`) || [];
   
-let reawMember = message.mentions.members.first() || message.guild.members.cache.get(args[0]);  
+let uye = message.mentions.members.first() || message.guild.members.cache.get(args[0]);  
 let süre = args[1]
 let sebep = args.splice(2).join(" ") || "Sebep belirtilmedi";
   
 if (!message.member.roles.cache.get("795215619892183051") && !message.member.hasPermission("ADMINISTRATOR")) return message.channel.send(embed.setDescription(`Yeterli yetkiye sahip değilsiniz.`))
-if (!args[0] && !reawMember) {
+if (!args[0] && !uye) {
 message.channel.send(reawEmbed.setDescription(`
 :no_entry_sign: Birisini etiketlemeyi unuttun!
 
@@ -47,7 +47,7 @@ return;
 }
   
   message.channel.send(embed.setDescription(`
-${reawMember} isimli kullanıcıya sesli kanallarda mute atmak için <:v_:799375357513170978>, yazılı kanallarda mute atmak için <:4406_text_emoji1:799375236545511526> emojisine tıklamalısın.
+${uye} isimli kullanıcıya sesli kanallarda mute atmak için <:v_:799375357513170978>, yazılı kanallarda mute atmak için <:4406_text_emoji1:799375236545511526> emojisine tıklamalısın.
 `)).then(async mesaj => {
  await mesaj.react("799407473634181172"); //sesli id
   await mesaj.react("799407473312268339"); //yazılı id
@@ -64,13 +64,13 @@ yazilimute.on("collect", async sasa => {
     if (!süre) return message.channel.send(embed.setDescription(`Geçerli bir süre belirtmelisin!`))
 mesaj.reactions.removeAll();
 mesaj.react("✅"); //tik emoji id koyabilrsn
-reawMember.roles.add("797445574508412948");
+uye.roles.add("797445574508412948");
 mesaj.edit(embed.setDescription(`
-${reawMember} kullanıcısı yazılı kanallarda **${sebep}** sebebiyle susturuldu!
+${uye} kullanıcısı yazılı kanallarda **${sebep}** sebebiyle susturuldu!
 `))
    let ceza = {
       No: cezano,
-      Cezalanan: reawMember.id,
+      Cezalanan: uye.id,
       Yetkili: message.author.id,
       Tip: "MUTE",
       Tur: "Susturulma",
@@ -79,19 +79,19 @@ ${reawMember} kullanıcısı yazılı kanallarda **${sebep}** sebebiyle susturul
       BitisZaman: "Şuan da susturulu",
       Zaman: Date.now() 
     };
-  if(reawMember.voice.channel) reawMember.voice.setMute(true).catch();
-    if (!muteler.some(j => j.id == reawMember.id)) {
-      cezaDb.push(`sessusturulma`, {id: reawMember.id,No: cezano, kalkmaZamani: Date.now()+ms(süre)})
+  if(uye.voice.channel) uye.voice.setMute(true).catch();
+    if (!muteler.some(j => j.id == uye.id)) {
+      cezaDb.push(`sessusturulma`, {id: uye.id,No: cezano, kalkmaZamani: Date.now()+ms(süre)})
       kDb.add(`k.${message.author.id}.sesmute`, 1);
-      kDb.push(`k.${reawMember.id}.sicil`, ceza);
+      kDb.push(`k.${uye.id}.sicil`, ceza);
       kDb.set(`ceza.${cezano}`, ceza)
     };
     cezaNoDb.add(`cezano.${client.sistem.a_SunucuID}`, 1)
-message.guild.channels.cache.get("797445555986759690").send(embed.setDescription(`${reawMember} üyesi ${message.author} tarafından **${sebep}** sebebiyle **yazılı kanallarda** susturuldu!`))
+message.guild.channels.cache.get("797445555986759690").send(embed.setDescription(`${uye} üyesi ${message.author} tarafından **${sebep}** sebebiyle **yazılı kanallarda** susturuldu!`))
 setTimeout(() => {
 
-reawMember.roles.remove("797445574508412948")
-      message.channel.send(embed.setDescription(`${reawMember} adlı üyenin mutesi süresi dolduğu için açıldı!`))
+uye.roles.remove("797445574508412948")
+      message.channel.send(embed.setDescription(`${uye} adlı üyenin mutesi süresi dolduğu için açıldı!`))
 
     }, ms(süre))
 });
@@ -100,16 +100,16 @@ seslimute.on("collect", async sasa => {
   if (!süre) return message.channel.send(embed.setDescription(`Geçerli bir süre belirtmelisin!`))
 mesaj.reactions.removeAll();
 mesaj.react("✅"); //tik emoji id koyabilirsn
-message.guild.members.cache.get(reawMember.id).voice.setMute(true).catch();
+message.guild.members.cache.get(uye.id).voice.setMute(true).catch();
 mesaj.edit(embed.setDescription(`
-${reawMember} kullanıcısı sesli kanallarda **${sebep}** sebebiyle susturuldu!
+${uye} kullanıcısı sesli kanallarda **${sebep}** sebebiyle susturuldu!
 `))
-message.guild.channels.cache.get("797445555986759690").send(embed.setDescription(`${reawMember} üyesi ${message.author} tarafından **${sebep}** sebebiyle **sesli kanallarda** susturuldu!`))
-if(reawMember.voice.channel) reawMember.voice.setMute(true).catch();
-    if (!mutelers.some(j => j.id == reawMember.id)) {
+message.guild.channels.cache.get("797445555986759690").send(embed.setDescription(`${uye} üyesi ${message.author} tarafından **${sebep}** sebebiyle **sesli kanallarda** susturuldu!`))
+if(uye.voice.channel) uye.voice.setMute(true).catch();
+    if (!mutelers.some(j => j.id == uye.id)) {
     let ceza = {
         No: cezano,
-        Cezalanan: reawMember.id,
+        Cezalanan: uye.id,
         Yetkili: message.author.id,
         Tip: "VMUTE",
         Tur: "Seste Susturulma",
@@ -118,18 +118,18 @@ if(reawMember.voice.channel) reawMember.voice.setMute(true).catch();
         BitisZaman: "Şuan da seste susturulu",
         Zaman: Date.now() 
       };
-    if(reawMember.voice.channel) reawMember.voice.setMute(true).catch();
-    if (!mutelers.some(j => j.id == reawMember.id)) {
-      cezaDb.push(`sessusturulma`, {id: reawMember.id,No: cezano, kalkmaZamani: Date.now()+ms(süre)})
+    if(uye.voice.channel) uye.voice.setMute(true).catch();
+    if (!mutelers.some(j => j.id == uye.id)) {
+      cezaDb.push(`sessusturulma`, {id: uye.id,No: cezano, kalkmaZamani: Date.now()+ms(süre)})
       kDb.add(`k.${message.author.id}.sesmute`, 1);
-      kDb.push(`k.${reawMember.id}.sicil`, ceza);
+      kDb.push(`k.${uye.id}.sicil`, ceza);
       kDb.set(`ceza.${cezano}`, ceza)
     }
   
   setTimeout(() => {
 
-reawMember.voice.setMute(false)
-      message.channel.send(embed.setDescription(`${reawMember} adlı üyenin mutesi süresi dolduğu için açıldı!`))
+uye.voice.setMute(false)
+      message.channel.send(embed.setDescription(`${uye} adlı üyenin mutesi süresi dolduğu için açıldı!`))
     }, ms(süre))
 }});
 

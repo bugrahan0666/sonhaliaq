@@ -36,7 +36,7 @@ module.exports = {
     let sesmuteler = cezaDb.get(`sessusturulma`) || [];
     let kalicimuteler = cezaDb.get(`kalicisusturma`) || [];
     uye.roles.remove(phentos.Roller.muteRolu).catch();
-    if (muteler.some(j => j.id === uye.id)) cezaDb.set(`susturulma`, muteler.filter(x => x.id !== uye.id));
+  //if (muteler.some(j => j.id === uye.id)) cezaDb.set(`susturulma`, muteler.filter(x => x.id !== uye.id));
     if (sesmuteler.some(j => j.id === uye.id)) cezaDb.set(`sessusturulma`, sesmuteler.filter(x => x.id !== uye.id));
     if (kalicimuteler.some(j => j.id === uye.id)) cezaDb.set(`kalicisusturma`, kalicimuteler.filter(x => x.id !== uye.id));
     kDb.set(`ceza.${muteler.No}.BitisZaman`, Date.now());
