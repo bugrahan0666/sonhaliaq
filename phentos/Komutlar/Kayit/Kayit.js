@@ -48,7 +48,7 @@ module.exports = {
     let yaş = args.filter(arg => !isNaN(arg))[0] || undefined;
     if(!isim || !yaş) return message.channel.send(`Hata: Lütfen tüm argümanları doldurunuz!  __Örn:__  \`${client.sistem.a_Prefix}kayıt @phentos/ID isim yaş\``).then(sil => sil.delete({timeout: 5000}));
         BelirlenenIsim = `${uye.user.username.includes(Tag1) ? Tag1 : (Tag2 ? Tag2 : (Tag1 || ""))} ${isim} | ${yaş}`;
-        uye.setNickname(`${BelirlenenIsim}`).catch();
+        message.guild.members.cache.get(uye.id).setNickname(`${BelirlenenIsim}`).catch();
         kullaniciverisi.push(`k.${uye.id}.isimler`, {
             Isim: BelirlenenIsim,
             Yetkili: message.author.id,
@@ -68,13 +68,13 @@ module.exports = {
             kullaniciverisi.add(`teyit.${message.author.id}.erkekteyit`, 1);
             kullanicicinsiyet.push(`veri.${uye.id}.cinsiyet`, `erkek`);
             let erkek = uye.roles.cache.filter(x => x.managed).map(x => x.id).concat(phentos.erkekRolleri)
-            await uye.roles .set(erkek)
+            await uye.roles.set([erkek])
             message.channel.send(embed.setDescription(`${uye}, adlı üye başarıyla ${message.author}, tarafından **Erkek** olarak kayıt edildi.`)).then(sil => sil.delete({timeout: 15000}));    } else {
          if (tepki.emoji.id == Ayarlar.kadinTepkiId) {
             kullaniciverisi.add(`teyit.${message.author.id}.kadinteyit`, 1);
             kullanicicinsiyet.push(`veri.${uye.id}.cinsiyet`, `kadin`);
             let kadın = uye.roles.cache.filter(x => x.managed).map(x => x.id).concat(phentos.kadinRolleri)
-            await uye.roles.set(kadın)
+            await uye.roles.set([kadın])
             message.channel.send(embed.setDescription(`${uye}, adlı üye başarıyla ${message.author}, tarafından **Kadın** olarak kayıt edildi.`)).then(sil => sil.delete({timeout: 15000}));
          } 
        } if(uye.user.username.includes(Tag1)) uye.roles.add(phentos.tagRolu); 

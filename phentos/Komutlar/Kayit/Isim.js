@@ -1,4 +1,6 @@
-﻿﻿const { Client, Message, MessageEmbed, Guild } = require("discord.js");
+const { Client, Message, MessageEmbed, Guild } = require("discord.js");
+const Discord = require("discord.js");
+const client  = new Discord.Client();
 const db = require("quick.db");
 const kullaniciverisi = new db.table("aKullanici");
 const phentos = client.veri.kayıtRolleri;
