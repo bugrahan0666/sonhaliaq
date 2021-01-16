@@ -5,7 +5,8 @@ const cezaNoDb = new qDb.table("aVeri");
 const kDb = new qDb.table("aKullanici");
 const moment = require('moment');
 const ms = require('ms');
-const phentos = Client.veri;
+let PhentosAyarlar = require("../../phentos-veri.json")
+let phentos = PhentosAyarlar.Roller 
 module.exports = {
     Isim: "mute",
     Komut: ["sustur","chatmute","cmute"],
@@ -26,7 +27,7 @@ module.exports = {
    */
   onRequest: async function (client, message, args, guild) {
     let cezano = cezaNoDb.get(`cezano.${client.sistem.a_SunucuID}`) + 1;
-    if(!["795215619892183051"].some(role => message.member.roles.cache.get(role)) && (!message.member.hasPermission("ADMINISTRATOR")))  return message.channel.send(`Hata: Bu komutunu kullanabilmek için yeterli yetkiye sahip değilsin.`).then(sil => sil.delete({timeout: 5000}));
+  if(!phentos.muteHammer.some(rol => message.member.roles.cache.has(rol)) && !message.member.hasPermission('ADMINISTRATOR')) return message.channel.send(`Hata: Bu komutunu kullanabilmek için yeterli yetkiye sahip değilsin.`).then(sil => sil.delete({timeout: 5000}));
 let reawEmbed = new MessageEmbed().setFooter("Reawen ❤️ Phentos").setColor("010000").setTimestamp()  
 let embed = reawEmbed;
 let muteler = cezaDb.get(`susturulma`) || [];

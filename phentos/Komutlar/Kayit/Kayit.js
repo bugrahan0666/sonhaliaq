@@ -1,11 +1,14 @@
-﻿const { Client, Message, MessageEmbed, Guild } = require("discord.js");
+const { Client, Message, MessageEmbed, Guild } = require("discord.js");
+let PenthosAyarlar = require("../../phentos-veri.json")
+const Discord = require("discord.js");
+const client = new Discord.Client();
 const db = require("quick.db");
 const kullaniciverisi = new db.table("aKullanici");
 const kullanicicinsiyet = new db.table("aCinsiyet");
-const phentos = client.veri.kayıtRolleri;
-const phentosveri = client.veri;
-const Ayarlar = client.veri.tepkiId;
-const phentoskanallar = client.veri.Kanallar;
+const phentos = PenthosAyarlar.kayıtRolleri
+const phentosveri = PenthosAyarlar.veri
+const Ayarlar = PenthosAyarlar.tepkiId
+const phentoskanallar = PenthosAyarlar.Kanallar
 const tepkiler = [
     Ayarlar.erkekTepkiId,
     Ayarlar.kadinTepkiId,
@@ -29,7 +32,7 @@ module.exports = {
    * @param {Guild} guild
    */
   onRequest: async function (client, message, args, guild) {
-    let embed = new MessageEmbed().setColor('0x2f3136').setFooter(client.altbaslik).setAuthor(phentosveri.Tag + " " + phentosveri.sunucuIsmi, message.guild.iconURL({dynamic: true, size: 2048}))
+    let embed = new MessageEmbed().setColor('0x2f3136').setFooter(client.altbaslik)
     if((!phentos.erkekRolleri && !phentos.kadinRolleri) || !phentos.kayıtYapanRoller) return message.channel.send("Sistemsel hata: Rol bulunamadı veya rol bilgileri girilemedi.").then(sil => sil.delete({timeout: 5000}));
     if(!phentos.kayıtYapanRoller.some(rol => message.member.roles.cache.has(rol)) && !message.member.hasPermission('ADMINISTRATOR')) return message.channel.send(`Hata: Bu komutu kullanabilmek için yeterli yetkiye sahip değilsin.`).then(sil => sil.delete({timeout: 5000}));
     let uye = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
