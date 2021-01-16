@@ -5,7 +5,10 @@ const cezaNoDb = new qDb.table("aVeri");
 const kDb = new qDb.table("aKullanici");
 const moment = require('moment');
 const ms = require('ms');
+const Discord = require("discord.js");
+const client = new Discord.Client();
 const phentos = client.veri;
+let No = qDb.table("cezano")
 module.exports = {
     Isim: "unmute",
     Komut: ["susturmakaldır"],

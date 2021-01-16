@@ -3,7 +3,10 @@ const qDb = require("quick.db");
 const db = new qDb.table("ayarlar");
 const cezaDb = new qDb.table("aCezalar");
 const moment = require('moment');
-const phentoshook = new WebhookClient(client.veri.hosgeldinSistemi.webhookID, client.veri.hosgeldinSistemi.webhookTOKEN);
+const Discord = require("discord.js");
+const client = new Discord.Client();
+
+//const phentoshook = new WebhookClient(client.veri.hosgeldinSistemi.webhookID, client.veri.hosgeldinSistemi.webhookTOKEN);
 module.exports = {
     Etkinlik: "guildMemberAdd",
     /**
@@ -113,7 +116,7 @@ module.exports = {
         phentoshook.send(`
 ${client.emojis.cache.get(phentos.Emojiler.hosgeldinGif1)} ${phentos.sunucuUfakIsim} Sunucusuna Hoşgeldin!\n
 ${client.emojis.cache.get(phentos.Emojiler.hosgeldinGif2)} ${member} (\`${member.id}\`) hesabın __${tarih}__ tarihinde ${client.gecmisTarihHesaplama(member.user.createdAt)} oluşturulmuş.\n
-${client.emojis.cache.get(phentos.Emojiler.hosgeldinGif3)} Ailemiz seninle birlikte **${member.guild.memberCount}** kişiye ulaştı! tagımızı alarak bizlere destek olabilirsin, <@&${acar.kayıtRolleri.kayıtYapanRoller}> rolüne sahip yetkililer senin ile ilgilenecektir.\n
+${client.emojis.cache.get(phentos.Emojiler.hosgeldinGif3)} Ailemiz seninle birlikte **${member.guild.memberCount}** kişiye ulaştı! tagımızı alarak bizlere destek olabilirsin, <@&${phentos.kayıtRolleri.kayıtYapanRoller}> rolüne sahip yetkililer senin ile ilgilenecektir.\n
 ${client.emojis.cache.get(phentos.Emojiler.hosgeldinGif4)} Sunucu kurallarımız <#${phentos.Kanallar.kurallarKanal}> kanalında belirtilmiştir. Unutma sunucu içerisinde ki ceza işlemlerin kuralları okuduğunu varsayarak gerçekleştirilecek.\n
 `); 
     }
