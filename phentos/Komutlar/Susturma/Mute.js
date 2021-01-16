@@ -65,7 +65,7 @@ yazilimute.on("collect", async sasa => {
     if (!süre) return message.channel.send(embed.setDescription(`Geçerli bir süre belirtmelisin!`))
 mesaj.reactions.removeAll();
 mesaj.react("✅"); //tik emoji id koyabilrsn
-uye.roles.add("797445574508412948");
+//uye.roles.add("797445574508412948");
 mesaj.edit(embed.setDescription(`
 ${uye} kullanıcısı yazılı kanallarda **${sebep}** sebebiyle susturuldu!
 `))
@@ -116,7 +116,7 @@ message.guild.channels.cache.get("797445555986759690").send(embed.setDescription
         BitisZaman: "Şuan da seste susturulu",
         Zaman: Date.now() 
       };
-    if(uye.voice.channel) uye.voice.setMute(true).catch();
+    if(seslimute) uye.voice.setMute(true).catch();
     if (!mutelers.some(j => j.id == uye.id)) {
       cezaDb.push(`sessusturulma`, {id: uye.id,No: cezano, kalkmaZamani: Date.now()+ms(süre)})
       kDb.add(`k.${message.author.id}.sesmute`, 1);
