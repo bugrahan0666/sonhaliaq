@@ -27,45 +27,74 @@ module.exports = {
   onRequest: async function (client, message, args, guild) {
     let muteicon = client.emojis.cache.get(phentos.Emojiler.susturuldu)
     let cezano = cezaNoDb.get(`cezano.${client.sistem.a_SunucuID}`) + 1;
-    let embed = new MessageEmbed().setColor('0x2f3136').setAuthor(phentos.Tag + " " + phentos.sunucuIsmi, message.guild.iconURL({dynamic: true, size: 2048}))
     if(!phentos.Roller.muteHammer || !phentos.Roller.muteHammer) return message.channel.send("Sistemsel hata: Rol bulunamadı veya rol bilgileri girilemedi.").then(sil => sil.delete({timeout: 5000}));
     if(!phentos.Roller.muteHammer.some(rol => message.member.roles.cache.has(rol)) && !message.member.hasPermission('ADMINISTRATOR')) return message.channel.send(`Hata: Bu komutunu kullanabilmek için yeterli yetkiye sahip değilsin.`).then(sil => sil.delete({timeout: 5000}));
-    let uye = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
-    if(!uye) return message.channel.send(`Hata: Lütfen bir üye etiketleyin veya Id giriniz!  __Örn:__  \`${client.sistem.a_Prefix}mute @PHENTOS/ID <1s/1m/1h/1d> <sebep>\``).then(sil => sil.delete({timeout: 5000}));
-    if (message.member.roles.highest.position <= uye.roles.highest.position) return message.channel.send(`Hata: Belirttiğin kişi senden üstün veya onunla aynı yetkidesin!`).then(sil => sil.delete({timeout: 5000}));
-    let muteler = cezaDb.get(`susturulma`) || [];
-    let sure = args[1];
-    let reason = args.splice(2).join(" ");
-    if(!sure || !ms(sure) || !reason) return message.channel.send(`Hata: Lütfen bir süre belirleyin!  __Örn:__  \`${client.sistem.a_Prefix}jail @PHENTOS/ID <1s/1m/1h/1d> <sebep>\``).then(sil => sil.delete({timeout: 5000}));
-    let mutezaman = args[1]
-      .replace(`d`," Gün")
-      .replace(`s`," Saniye")
-      .replace(`h`," Saat")
-      .replace(`m`," Dakika")
-      .replace(`w`," Hafta")
-    let ceza = {
-      No: cezano,
-      Cezalanan: uye.id,
-      Yetkili: message.author.id,
-      Tip: "MUTE",
-      Tur: "Susturulma",
-      Sebep: reason,
-      AtilanSure: mutezaman,
-      BitisZaman: "Şuan da susturulu",
-      Zaman: Date.now() 
-    };
-    await uye.roles.add(phentos.Roller.muteRolu).catch();
-    if (!muteler.some(j => j.id == uye.id)) {
-      cezaDb.push(`susturulma`, {id: uye.id,No: cezano,kalkmaZamani: Date.now()+ms(sure)})
-      kDb.add(`k.${message.author.id}.mute`, 1);
-      kDb.push(`k.${uye.id}.sicil`, ceza);
-      kDb.set(`ceza.${cezano}`, ceza)
-    };
-    cezaNoDb.add(`cezano.${client.sistem.a_SunucuID}`, 1)
-    message.channel.send(`${muteicon} ${uye} kişisi **${reason}** nedeni ile **${mutezaman}** süresince metin kanallarında __susturuldu__. (Ceza Numarası: #${cezano})`).catch().then(sil => sil.delete({timeout: 10000}));
-   message.react("✅")
-    if(phentos.Kanallar.muteLogKanali && client.channels.cache.has(phentos.Kanallar.muteLogKanali)) client.channels.cache.get(phentos.Kanallar.muteLogKanali).send(embed.setDescription(`${uye} üyesi, ${message.author} tarafından **${mutezaman}** boyunca **${reason}** nedeniyle **${client.tarihsel}** tarihin de metin kanalların da susturuldu.`).setFooter(client.altbaslik + ` • Ceza Numarası: #${cezano}`)).catch();
+let reawEmbed = new Discord.MessageEmbed().setFooter("Reawen ❤️ Phentos").setColor("010000").setTimestamp()  
+let embed = reawEmbed;
   
-     }
+let reawMember = message.mentions.members.first() || message.guild.members.cache.get(args[0]);  
+let süre = args[1]
+let sebep = args.splice(2).join(" ") || "Sebep belirtilmedi";
+  
+if (!message.member.roles.cache.get("795215619892183051) && !message.member.hasPermission("ADMINISTRATOR")) return message.channel.send(embed.setDescription(`Yeterli yetkiye sahip değilsiniz.`))
+if (!args[0] && !reawMember) {
+message.channel.send(reawEmbed.setDescription(`
+:no_entry_sign: Birisini etiketlemeyi unuttun!
+
+Bu sistemde aşağıdaki emojilerden ses/chat mute açacağını belirleyebilirsin!
+`))  
+return;  
+}
+  
+  message.channel.send(embed.setDescription(`
+${reawMember} isimli kullanıcıya sesli kanallarda mute atmak için <:v_:799375357513170978>, yazılı kanallarda mute atmak için <:4406_text_emoji1:799375236545511526> emojisine tıklamalısın.
+`)).then(async mesaj => {
+  await mesaj.react("799375357513170978"); //sesli id
+  await mesaj.react("799375236545511526"); //yazılı id
+
+const sesli = (reaction, user) =>
+    reaction.emoji.id === "799375357513170978" && user.id === message.author.id; //sesli id
+const yazili = (reaction, user) =>
+    reaction.emoji.id === "799375236545511526" && user.id === message.author.id; //yazılı id
+
+const seslimute = mesaj.createReactionCollector(sesli, { time: 10000 });
+const yazilimute = mesaj.createReactionCollector(yazili, { time: 10000 });
+
+yazilimute.on("collect", async sasa => {
+if (!süre) return message.channel.send(embed.setDescription(`Geçerli bir süre belirtmelisin!`))
+mesaj.reactions.removeAll();
+mesaj.react("✅"); //tik emoji id koyabilrsn
+reawMember.roles.add("798270345416802334");
+mesaj.edit(embed.setDescription(`
+${reawMember} kullanıcısı yazılı kanallarda **${sebep}** sebebiyle susturuldu!
+`))
+message.guild.channels.cache.get("log id").send(embed.setDescription(`${reawMember} üyesi ${message.author} tarafından **${sebep}** sebebiyle **yazılı kanallarda** susturuldu!`))
+setTimeout(() => {
+
+reawMember.roles.remove("798270345416802334")
+      message.channel.send(embed.setDescription(`${reawMember} adlı üyenin mutesi süresi dolduğu için açıldı!`))
+
+    }, ms(süre))
+});
+
+seslimute.on("collect", async sasa => {
+  if (!süre) return message.channel.send(embed.setDescription(`Geçerli bir süre belirtmelisin!`))
+if (!reawMember.voice.channel) return message.channel.send(embed.setDescription(`${reawMember} ses kanalında değil!`))
+mesaj.reactions.removeAll();
+mesaj.react("✅"); //tik emoji id koyabilirsn
+message.guild.members.cache.get(reawMember.id).voice.setMute(true).catch();
+mesaj.edit(embed.setDescription(`
+${reawMember} kullanıcısı sesli kanallarda **${sebep}** sebebiyle susturuldu!
+`))
+message.guild.channels.cache.get("798259497293316146").send(embed.setDescription(`${reawMember} üyesi ${message.author} tarafından **${sebep}** sebebiyle **sesli kanallarda** susturuldu!`))
+setTimeout(() => {
+
+reawMember.voice.setMute(false)
+      message.channel.send(embed.setDescription(`${reawMember} adlı üyenin mutesi süresi dolduğu için açıldı!`))
+
+    }, ms(süre))
+});
+  });
+}
 };
 
