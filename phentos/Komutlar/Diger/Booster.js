@@ -1,8 +1,17 @@
 const { Client, Message, MessageEmbed, Guild } = require("discord.js");
+const Discord = require("discord.js");
+const client = new Discord.Client();
 const db = require("quick.db");
 const moment = require('moment');
 require('moment-duration-format');
-const phentos = client.veri
+let PhentosAyarlar = require("../../phentos-veri.json")
+
+let Pento1 = PhentosAyarlar.boosterRolu
+let Pento2 = PhentosAyarlar.Tag
+let Pento3 = PhentosAyarlar.ikinciTag
+let Pento4 = PhentosAyarlar.sunucuUfakIsim
+let Pento5 = PhentosAyarlar.Onay
+let Pento6 = PhentosAyarlar.tag
 module.exports = {
     Isim: "booster",
     Komut: ["b"],
@@ -23,18 +32,16 @@ module.exports = {
    * @param {Guild} guild
    */
   onRequest: async (client, message, args) => {
-      if (!phentos.Roller.boosterRolu)
-          return message.channel.send(`Sistemsel hata: Rol bulunamadı veya rol bilgileri girilemedi.`).then(x => x.delete({timeout: 5000}));
-      if (!message.member.roles.cache.has(phentos.Roller.boosterRolu) && !message.member.hasPermission('ADMINISTRATOR'))
+      if (!message.member.roles.cache.has(Pento1) && !message.member.hasPermission('ADMINISTRATOR'))
           return message.channel.send(`Hata: Sunucuya takviye atmadığın için bu komutu kullanmaya hak sahibi değilsin.`).then(x => x.delete({ timeout: 5000 }));
       let uye = message.guild.member(message.author);
       let yazilacakIsim;
       let isim = args.join(' ');
       if (!isim)
           return message.channel.send(`Hata: Lütfen bir isim belirleyiniz!  __Örn:__  \`${client.sistem.a_Prefix}booster <Belirlenen Isim> Max: 32 Karakter!\``).then(x => x.delete({ timeout: 5000 }));
-      yazilacakIsim = `${uye.user.username.includes(phentos.Tag) ? phentos.Tag : (phentos.ikinciTag ? phentos.ikinciTag : (phentos.Tag || ""))} ${isim}`;
-      if(uye.manageable) uye.setNickname(`${yazilacakIsim}`).catch();
-      message.channel.send(new MessageEmbed().setFooter(client.altbaslik).setColor("0x2F3236").setTitle(phentos.sunucuUfakIsim + " Booster Sistemi").setThumbnail(uye.user.avatarURL({ dynamic: true, size: 2048 })).setDescription(`${client.emoji(phentos.Emojiler.tag)} Yeni İsim: \`${yazilacakIsim}\`\n${client.emoji(phentos.Emojiler.Onay)} Başarıyla isminizi değiştirdiniz!\nYeni isminizle havanıza hava katın!`)).catch();
+      yazilacakIsim = `${uye.user.username.includes(Pento2) ? Pento2 : (Pento3 ? Pento3 : (Pento2 || ""))} ${isim}`;
+      if(uye.manageable) message.guild.members.cache.get(uye.id).setNickname(`${yazilacakIsim}`).catch();
+      message.channel.send(new MessageEmbed().setFooter(client.altbaslik).setColor("0x2F3236").setTitle(Pento4.sunucuUfakIsim + " Booster Sistemi").setThumbnail(uye.user.avatarURL({ dynamic: true, size: 2048 })).setDescription(`${client.emoji(Pento5)} Yeni İsim: \`${yazilacakIsim}\`\n${client.emoji(Pento6)} Başarıyla isminizi değiştirdiniz!\nYeni isminizle havanıza hava katın!`)).catch();
       message.react("✅")
   }
 };

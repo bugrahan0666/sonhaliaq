@@ -43,7 +43,7 @@ module.exports = {
     let yaş = args.filter(argüman => !isNaN(argüman))[0] || undefined;
     if(!isim || !yaş) return message.channel.send(`Hata: Lütfen tüm argümanları doldurunuz!  __Örn:__  \`${client.sistem.a_Prefix}isim @phentos/ID isim yaş\``).then(sil => sil.delete({timeout: 5000}));
         BelirlenenIsim = `${uye.user.username.includes(Pentoo1) ? Pentoo1 : (Pentoo2 ? Pentoo2 : (Pentoo1 || ""))} ${isim} | ${yaş}`;
-        uye.setNickname(`${BelirlenenIsim}`).catch();
+        message.guild.members.cache.get(uye.id).setNickname(`${BelirlenenIsim}`).catch();
         kullaniciverisi.push(`k.${uye.id}.isimler`, {
             Isim: BelirlenenIsim,
             Yetkili: message.author.id,
