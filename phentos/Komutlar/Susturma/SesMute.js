@@ -5,11 +5,11 @@ const cezaNoDb = new qDb.table("aVeri");
 const kDb = new qDb.table("aKullanici");
 const moment = require('moment');
 const ms = require('ms');
-const acar = client.veri;
+const phentos = client.veri;
 module.exports = {
     Isim: "sesmute",
     Komut: ["voicemute", "sessustur", "vmute"],
-    Kullanim: "sessustur @acar/ID <süre> <sebep>",
+    Kullanim: "sessustur @PHENTOS/ID <süre> <sebep>",
     Aciklama: "Belirlenen üyeyi belirtilen süre boyunca ses kanallarında susturur.",
     Kategori: "Yetkili Komutları",
     TekSunucu: true,
@@ -25,10 +25,10 @@ module.exports = {
    * @param {Guild} guild
    */
   onRequest: async function (client, message, args, guild) {
-    let muteicon = client.emojis.cache.get(acar.Emojiler.susturuldu)
-    let embed = new MessageEmbed().setColor('0x2f3136').setAuthor(acar.Tag + " " + acar.sunucuIsmi, message.guild.iconURL({dynamic: true, size: 2048}))
+    let muteicon = client.emojis.cache.get(phentos.Emojiler.susturuldu)
+    let embed = new MessageEmbed().setColor('0x2f3136').setAuthor(phentos.Tag + " " + phentos.sunucuIsmi, message.guild.iconURL({dynamic: true, size: 2048}))
     let cezano = cezaNoDb.get(`cezano.${client.sistem.a_SunucuID}`) + 1;
-    if(!acar.Roller.voiceMuteHammer || !acar.Roller.voiceMuteHammer) return message.channel.send("Sistemsel hata: Rol bulunamadı veya rol bilgileri girilemedi.").then(sil => sil.delete({timeout: 5000}));
+    if(!acar.Roller.voiceMuteHammer || !phentos.Roller.voiceMuteHammer) return message.channel.send("Sistemsel hata: Rol bulunamadı veya rol bilgileri girilemedi.").then(sil => sil.delete({timeout: 5000}));
     if(!acar.Roller.voiceMuteHammer.some(rol => message.member.roles.cache.has(rol)) && !message.member.hasPermission('ADMINISTRATOR')) return message.channel.send(`Bu komutunu kullanabilmek için yeterli yetkiye sahip değilsin.`).then(sil => sil.delete({timeout: 5000}));
     let uye = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
     if(!uye) return message.channel.send(`Hata: Lütfen bir üye etiketleyin veya Id giriniz!  __Örn:__  \`${client.sistem.a_Prefix}voicemute @acar/ID <1s/1m/1h/1d> <sebep>\``).then(sil => sil.delete({timeout: 5000}));

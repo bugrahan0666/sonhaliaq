@@ -2,11 +2,11 @@ const { Client, Message, MessageEmbed, Guild } = require("discord.js");
 const db = require("quick.db");
 const moment = require('moment');
 require('moment-duration-format');
-const acar = client.veri
+const phentos = client.veri
 module.exports = {
     Isim: "yardım",
     Komut: ["help"],
-    Kullanim: "afk <sebep>",
+    Kullanim: "yardım <sebep>",
     Aciklama: "Klavyeden uzak iseniz gitmeden önce bu komutu girdiğinizde sizi etiketleyenlere sizin klavye başında olmadığınızı açıklar.",
     Kategori: "-",
     TekSunucu: true,
@@ -24,7 +24,7 @@ module.exports = {
    */
   onRequest: async (client, message, args) => {
     let command = args[0]
-    let embed2 = new MessageEmbed().setAuthor(acar.Tag + " " + acar.sunucuUfakIsim + ` - Komut Bilgisi`, message.guild.iconURL({dynamic: true, size: 2048})).setFooter(client.altbaslik).setFooter(client.altbaslik)
+    let embed2 = new MessageEmbed().setAuthor(phentos.Tag + " " + phentos.sunucuUfakIsim + ` - Komut Bilgisi`, message.guild.iconURL({dynamic: true, size: 2048})).setFooter(client.altbaslik).setFooter(client.altbaslik)
   if (client.komutlar.has(command)) {
   
     command = client.komutlar.get(command)
@@ -51,7 +51,7 @@ module.exports = {
       
         const embed = new MessageEmbed()
         .setColor("0x2F3236")
-        .setAuthor(acar.Tag + " " + acar.sunucuUfakIsim+ " - Yardım Menüsü", message.guild.iconURL({dynamic: true, size: 2048})).setFooter(`Bir komut hakkında detaylı bilgi almak için; ${client.sistem.a_Prefix}yardım <komut ismi>`)
+        .setAuthor(phentos.Tag + " " + phentos.sunucuUfakIsim+ " - Yardım Menüsü", message.guild.iconURL({dynamic: true, size: 2048})).setFooter(`Bir komut hakkında detaylı bilgi almak için; ${client.sistem.a_Prefix}yardım <komut ismi>`)
         .addField(`Bot Yönetim Komutları`, `${client.komutlar.filter(x => x.Kategori === "Bot/Taç").map(x => `${client.sistem.a_Prefix}` + x.Kullanim).join('\n ')}`)
         .addField(`Yönetim Komutları`, `${client.komutlar.filter(x => x.Kategori === "Yönetim Komutları").map(x => `${client.sistem.a_Prefix}` + x.Kullanim).join('\n ')}`)
         .addField(`Yetkili Komutları`, `${client.komutlar.filter(x => x.Kategori === "Yetkili Komutları").map(x => `${client.sistem.a_Prefix}` + x.Kullanim).join('\n ')}`)
