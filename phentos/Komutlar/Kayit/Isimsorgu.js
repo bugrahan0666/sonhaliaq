@@ -32,10 +32,14 @@ module.exports = {
     let uye = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
     if(!uye) return message.channel.send(`Hata: Lütfen bir üye etiketleyin veya Id giriniz!  __Örn:__  \`${client.sistem.a_Prefix}isimsorgu @phentos/ID\``).then(sil => sil.delete({timeout: 5000}));
     let isimsorgu = kullaniciverisi.get(`k.${uye.id}.isimler`) || [];
+    let rolsorgu = kullaniciverisi.get(`k.${uye.id}.roller`) || [];
    let Liste = isimsorgu.length || `0`;
+  let RolSorgu = rolsorgu.length || `0`;
   isimsorgu = isimsorgu.reverse();
+  rolsorgu = rolsorgu.reverse();
   let IsimGecmisi;
-  IsimGecmisi = isimsorgu.length > 0 ? isimsorgu.map((value, index) => `\`${value.Isim}\` \`${value.VerilenRoller}\` `).join("\n") : "Üyenin herhangi bir kayıtı bulunamadı.";
+  let RolGecmisi;
+  IsimGecmisi = isimsorgu.length > 0 ? isimsorgu.map((value, index) => `\`${value.Isim}\` \`${value.erkekRolleri}\` `).join("\n") : "Üyenin herhangi bir kayıtı bulunamadı.";
     message.channel.send(embed.setAuthor(uye.displayName, uye.user.avatarURL({dynamic: true})).setDescription(`\n**Bu Kullanıcının Geçmiş İsimleri [${Liste}]**\n${IsimGecmisi}`));
     }
 };

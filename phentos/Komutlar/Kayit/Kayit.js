@@ -45,6 +45,7 @@ module.exports = {
     args = args.filter(a => a !== "" && a !== " ").splice(1);
     let BelirlenenIsim;
     let erkekRolleri;
+    let kadinRolleri;
     let isim = args.filter(arg => isNaN(arg)).map(arg => arg.charAt(0).replace('i', "İ").toUpperCase()+arg.slice(1)).join(" ");
     let yaş = args.filter(arg => !isNaN(arg))[0] || undefined;
     if(!isim || !yaş) return message.channel.send(`Hata: Lütfen tüm argümanları doldurunuz!  __Örn:__  \`${client.sistem.a_Prefix}kayıt @phentos/ID isim yaş\``).then(sil => sil.delete({timeout: 5000}));
@@ -53,10 +54,11 @@ module.exports = {
         kullaniciverisi.push(`k.${uye.id}.isimler`, {
             Isim: BelirlenenIsim,
             Yetkili: message.author.id,
-            Zaman: Date.now(),
-            VerilenRoller: erkekRolleri,
-            VerilenRoller2: kadinRolleri
+            Zaman: Date.now()
         });
+       kullaniciverisi.push(`k.${uye.id}.roller`, {
+         roller: message.guild.members.roles.cache.get(erkekRolleri.id) 
+       })
         let phentoskayit = await message.channel.send(embed
             .setDescription(`${uye} isimli kişinin cinsiyetini tepkilerle belirleyin!`)
             ).then(async m => {
@@ -71,13 +73,13 @@ module.exports = {
             kullaniciverisi.add(`teyit.${message.author.id}.erkekteyit`, 1);
             kullanicicinsiyet.push(`veri.${uye.id}.cinsiyet`, `erkek`);
             let erkek = uye.roles.cache.filter(x => x.managed).map(x => x.id).concat(phentos.erkekRolleri)
-            await uye.roles.set([erkek])
+            await uye.roles.set(erkek)
             message.channel.send(embed.setDescription(`${uye}, adlı üye başarıyla ${message.author}, tarafından **Erkek** olarak kayıt edildi.`)).then(sil => sil.delete({timeout: 15000}));    } else {
          if (tepki.emoji.id == Ayarlar.kadinTepkiId) {
             kullaniciverisi.add(`teyit.${message.author.id}.kadinteyit`, 1);
             kullanicicinsiyet.push(`veri.${uye.id}.cinsiyet`, `kadin`);
             let kadın = uye.roles.cache.filter(x => x.managed).map(x => x.id).concat(phentos.kadinRolleri)
-            await uye.roles.set([kadın])
+            await uye.roles.set(kadın)
             message.channel.send(embed.setDescription(`${uye}, adlı üye başarıyla ${message.author}, tarafından **Kadın** olarak kayıt edildi.`)).then(sil => sil.delete({timeout: 15000}));
          } 
        } if(uye.user.username.includes(Tag1)) uye.roles.add(phentos.tagRolu); 
