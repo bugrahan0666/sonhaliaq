@@ -3,6 +3,7 @@ const db = require("quick.db");
 const Discord = require("discord.js");
 const client = new Discord.Client();
 const kullaniciverisi = new db.table("aKullanici");
+let kullanicicinsiyet = new db.table("aCinsiyet");
 let PhentosAyarlar = require("../../phentos-veri.json")
 let Pento1 = PhentosAyarlar.erkekRolleri
 let Pento2 = PhentosAyarlar.kadinRolleri
@@ -32,14 +33,14 @@ module.exports = {
     let uye = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
     if(!uye) return message.channel.send(`Hata: Lütfen bir üye etiketleyin veya Id giriniz!  __Örn:__  \`${client.sistem.a_Prefix}isimsorgu @phentos/ID\``).then(sil => sil.delete({timeout: 5000}));
     let isimsorgu = kullaniciverisi.get(`k.${uye.id}.isimler`) || [];
-    let rolsorgu = kullaniciverisi.get(`k.${uye.id}.roller`) || [];
+    let data = kullanicicinsiyet.get(`isim.${uye.id}`)
    let Liste = isimsorgu.length || `0`;
-  let RolSorgu = rolsorgu.length || `0`;
-  isimsorgu = isimsorgu.reverse();
-  rolsorgu = rolsorgu.reverse();
+  isimsorgu = isimsorgu.reverse(); 
+    data = data.reverse();
   let IsimGecmisi;
-  let RolGecmisi;
-  IsimGecmisi = isimsorgu.length > 0 ? isimsorgu.map((value, index) => `\`${value.Isim}\` \`${value.erkekRolleri}\` `).join("\n") : "Üyenin herhangi bir kayıtı bulunamadı.";
-    message.channel.send(embed.setAuthor(uye.displayName, uye.user.avatarURL({dynamic: true})).setDescription(`\n**Bu Kullanıcının Geçmiş İsimleri [${Liste}]**\n${IsimGecmisi}`));
+  let CinsiyetGecmisi;
+  let isimler = data.filter(x => x.userID === data.id).map(x => `(<@&${x.role}>)`).join("\n")
+  IsimGecmisi = isimsorgu.length > 0 ? isimsorgu.map((value, index) => `\`${value.Isim}\``).join("\n") : "Üyenin herhangi bir kayıtı bulunamadı.";
+    message.channel.send(embed.setAuthor(uye.displayName, uye.user.avatarURL({dynamic: true})).setDescription(`\n**Bu Kullanıcının Geçmiş İsimleri [${Liste}]**\n${IsimGecmisi} {isimler}`));
     }
 };
