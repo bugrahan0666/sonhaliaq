@@ -4,7 +4,7 @@ const cezaDb = new qDb.table("aCezalar");
 const cezaNoDb = new qDb.table("aVeri");
 const kDb = new qDb.table("aKullanici");
 const moment = require('moment');
-const acar = client.veri;
+const phentos = client.veri;
 module.exports = {
     Isim: "kb",
     Komut: ["kalkmazban"],
@@ -24,7 +24,7 @@ module.exports = {
    */
   onRequest: async function (client, message, args) {
     let cezano = cezaNoDb.get(`cezano.${client.sistem.a_SunucuID}`) + 1;
-    let embed = new MessageEmbed().setColor('0x2f3136').setTitle(`Kalkmazban (v2.0)`).setAuthor(acar.Tag + " " + acar.sunucuIsmi, message.guild.iconURL({dynamic: true, size: 2048}))
+    let embed = new MessageEmbed().setColor('0x2f3136').setTitle(`Kalkmazban (v2.0)`).setAuthor(phentos.Tag + " " + phentos.sunucuIsmi, message.guild.iconURL({dynamic: true, size: 2048}))
     if(!message.member.roles.cache.has(client.veri.Roller.botcuRolu)) return message.channel.send(`Hata: Bu komutunu kullanabilmek için herhangi bir yetkiye sahip değilsin.`).then(x => x.delete({timeout: 5000}));
     let kullanıcılar = await qDb.get(`akb_${message.guild.id}`)
     let kullanıcı = args[0];
@@ -63,7 +63,7 @@ module.exports = {
       kDb.add(`k.${message.author.id}.kalkmazban`, 1);
       kDb.push(`k.${kullanıcı}.sicil`, ceza);
       kDb.set(`ceza.${cezano}`, ceza);
-      if(acar.Kanallar.banLogKanali && client.channels.cache.has(acar.Kanallar.banLogKanali)) client.channels.cache.get(acar.Kanallar.banLogKanali).send(embed.setDescription(`» Yasaklayan Yetkili: ${message.author} (\`${message.author.id}\`)\n» Yasaklanan Üye: (\`${kullanıcı}\`) \n» Sebep: **${reason}**\n Bot sahibi veya taç sahibi tarafından bot üzerinden yasaklanmıştır.`).setFooter(client.altbaslik + ` • Ceza Numarası: #${cezano}`));
+      if(phentos.Kanallar.banLogKanali && client.channels.cache.has(phentos.Kanallar.banLogKanali)) client.channels.cache.get(phentos.Kanallar.banLogKanali).send(embed.setDescription(`» Yasaklayan Yetkili: ${message.author} (\`${message.author.id}\`)\n» Yasaklanan Üye: (\`${kullanıcı}\`) \n» Sebep: **${reason}**\n Bot sahibi veya taç sahibi tarafından bot üzerinden yasaklanmıştır.`).setFooter(client.altbaslik + ` • Ceza Numarası: #${cezano}`));
       message.channel.send(`Başarılı: \`${kullanıcı}\` ID'li kullanıcı artık __${reason}__ sebepi ile bu sunucuya asla __giremeyecek__ (Ceza Numarası: #${cezano})!`).then(x => x.delete({timeout: 5000}));
     }
   }

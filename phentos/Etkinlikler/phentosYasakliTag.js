@@ -23,21 +23,21 @@ module.exports = {
   };
 
   function yasakliTagKontrolEt() {
-    let acar = client.veri;
-    let acarveri = db.get("ayar") || {};
+    let phentos = client.veri;
+    let phentosveri = db.get("ayar") || {};
     let sid = client.sistem.a_sunucuId;
     
     // Yasaklı tag tarama (Yasaklı Tag Checkleme)
-    let yasakTaglar = acarveri.yasakTaglar || [];
+    let yasakTaglar = phentosveri.yasakTaglar || [];
     let yasakTaglilar = cezaDb.get("yasakTaglilar") || [];
   for (let kisi of yasakTaglilar) {
     let uye = client.guilds.cache.get(sid).members.cache.get(kisi.slice(1));
-    if (uye && yasakTaglar.some(tag => uye.user.username.includes(tag)) && !uye.roles.cache.has(acar.Roller.yasakliTagRolu)) uye.roles.set(uye.roles.cache.has(acar.Roller.boosterRolu) ? [acar.Roller.boosterRolu, acar.Roller.yasakliTagRolu] : [acar.Roller.yasakliTagRolu]).catch();
-    if (uye && !yasakTaglar.some(tag => uye.user.username.includes(tag)) && uye.roles.cache.has(acar.Roller.yasakliTagRolu)) {
+    if (uye && yasakTaglar.some(tag => uye.user.username.includes(tag)) && !uye.roles.cache.has(phentos.Roller.yasakliTagRolu)) uye.roles.set(uye.roles.cache.has(phentos.Roller.boosterRolu) ? [phentos.Roller.boosterRolu, phentos.Roller.yasakliTagRolu] : [phentos.Roller.yasakliTagRolu]).catch();
+    if (uye && !yasakTaglar.some(tag => uye.user.username.includes(tag)) && uye.roles.cache.has(phentos.Roller.yasakliTagRolu)) {
       db.set("yasakTaglilar", yasakTaglilar.filter(x => !x.includes(uye.id)));
-      uye.roles.set(acar.kayıtRolleri.kayıtsızRolleri).catch();
-      if(acar.IkinciTag) uye.setNickname(`${acar.IkinciTag} İsim | Yaş`).catch();
-      else if(acar.Tag) uye.setNickname(`${acar.Tag} İsim | Yaş`).catch();
+      uye.roles.set(phentos.kayıtRolleri.kayıtsızRolleri).catch();
+      if(phentos.IkinciTag) uye.setNickname(`${phentos.IkinciTag} İsim | Yaş`).catch();
+      else if(phentos.Tag) uye.setNickname(`${phentos.Tag} İsim | Yaş`).catch();
     };
   };
   };

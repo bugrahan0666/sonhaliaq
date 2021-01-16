@@ -18,22 +18,22 @@ module.exports = {
       .substring(message.client.sistem.a_Prefix.length)
       .split(" ");
     let Komut = Args[0];
-    let P = message.client;
+    let Phentos = message.client;
     Args = Args.splice(1);
     let Baslatici;
     let guild = message.guild || null;
     if (guild != null)
       await guild.fetch().then(result => guild = result)
-    if (Acar.komutlar.has(Komut)) {
-      Baslatici = Acar.komutlar.get(Komut);
+    if (Phentos.komutlar.has(Komut)) {
+      Baslatici = Phentos.komutlar.get(Komut);
       if (Baslatici.TekSunucu && message.channel.type == "dm")
         return;
-      Baslatici.onRequest(Acar, message, Args, guild);
-    } else if (Acar.komut.has(Komut)) {
-      Baslatici = Acar.komut.get(Komut);
+      Baslatici.onRequest(Phentos, message, Args, guild);
+    } else if (Phentos.komut.has(Komut)) {
+      Baslatici = Phentos.komut.get(Komut);
       if (Baslatici.TekSunucu && message.channel.type == "dm")
         return;
-      Baslatici.onRequest(Acar, message, Args, guild);
+      Baslatici.onRequest(Phentos, message, Args, guild);
     }
     bekleme[message.member.id] = Date.now();
   }

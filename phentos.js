@@ -99,4 +99,4 @@ client.emoji = function(x) {
 };
 
 
-client.login(client.sistem.a_Token).catch(err => console.error("PHENTOSCUM Discord API Botun tokenini doğrulayamadı."));
+client.login(client.sistem.p_Token).catch(err => console.error("PHENTOSCUM Discord API Botun tokenini doğrulayamadı."));

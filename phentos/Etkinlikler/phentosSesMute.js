@@ -15,7 +15,7 @@ module.exports = {
      * @param {GuildMember} member
      */
     onRequest: async function (oldState, newState) {
-        let acar = client.veri
+        let phentos = client.veri
         if((!oldState.channel && newState.channel) || (oldState.channel && newState.channel)){ 
             let data = cezaDb.get("sessusturulma") || [{id: null,kalkmaZamani: null}];
             let member = newState.member;

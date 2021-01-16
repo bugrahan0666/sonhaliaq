@@ -3,7 +3,7 @@ const qDb = require("quick.db");
 const db = new qDb.table("ayarlar");
 const moment = require('moment');
 const cezaDb = new qDb.table("aCezalar");
-const acar = client.veri
+const phentos = client.veri
 module.exports = {
     Etkinlik: "userUpdate",
     /**
@@ -26,14 +26,14 @@ module.exports = {
         let ayarlar = db.get(`ayar`) || {};
         let yasakTaglilar = db.get('yasakTaglilar') || [];
       
-        if ((ayarlar.yasakTaglar && ayarlar.yasakTaglar.some(tag => newUser.username.includes(tag))) && (acar.Roller.yasakliTagRolu && !user.roles.cache.has(acar.Roller.yasakliTagRolu))) {
-          user.roles.set(user.roles.cache.has(acar.Roller.boosterRolu) ? [acar.Roller.boosterRolu, acar.Roller.yasakliTagRolu] : [acar.Roller.yasakliTagRolu]).catch();
+        if ((ayarlar.yasakTaglar && ayarlar.yasakTaglar.some(tag => newUser.username.includes(tag))) && (phentos.Roller.yasakliTagRolu && !user.roles.cache.has(phentos.Roller.yasakliTagRolu))) {
+          user.roles.set(user.roles.cache.has(phentos.Roller.boosterRolu) ? [phentos.Roller.boosterRolu, phentos.Roller.yasakliTagRolu] : [phentos.Roller.yasakliTagRolu]).catch();
           user.send(`**${user.guild.name}** sunucumuzun yasaklı taglarından birini kullanıcı adına aldığın için jaile atıldın! Tagı geri bıraktığında jailden çıkacaksın.`).catch();
           if(!yasakTaglilar.some(x => x.includes(newUser.id))) cezaDb.push('yasakTaglilar', `y${newUser.id}`);
           return;
         };
-        if ((ayarlar.yasakTaglar && !ayarlar.yasakTaglar.some(tag => newUser.username.includes(tag))) && (acar.Roller.yasakliTagRoluu && user.roles.cache.has(acar.Roller.yasakliTagRolu)) && yasakTaglilar.some(x => x.includes(newUser.id))) {
-          user.roles.set(acar.kayıtRolleri.kayıtsızRolleri).catch();
+        if ((ayarlar.yasakTaglar && !ayarlar.yasakTaglar.some(tag => newUser.username.includes(tag))) && (phentos.Roller.yasakliTagRoluu && user.roles.cache.has(phentos.Roller.yasakliTagRolu)) && yasakTaglilar.some(x => x.includes(newUser.id))) {
+          user.roles.set(phentos.kayıtRolleri.kayıtsızRolleri).catch();
           user.send(`**${user.guild.name}** sunucumuzun yasaklı taglarından birine sahip olduğun için jaildeydin ve şimdi bu yasaklı tagı çıkardığın için jailden çıkarıldın!`).catch();
           cezaDb.set('yasakTaglilar', yasakTaglilar.filter(x => !x.includes(newUser.id)));
           return;
@@ -41,12 +41,12 @@ module.exports = {
 
 
         // Tag Çıkardı Ekledi (Checkleyip Rol verme İsim Ayarlama İşlemi)
-        if(newUser.username.includes(acar.Tag) && !user.roles.cache.has(acar.kayıtRolleri.tagRolu)){
-             user.roles.add(acar.kayıtRolleri.tagRolu).catch();
-             if(user.manageable) user.setNickname(user.displayName.replace(acar.IkinciTag, acar.Tag)).catch();
-       } else if(!newUser.username.includes(acar.Tag) && user.roles.cache.has(acar.kayıtRolleri.tagRolu)){
-             user.roles.remove(acar.kayıtRolleri.tagRolu).catch();
-             if(user.manageable) user.setNickname(user.displayName.replace(acar.Tag, acar.IkinciTag)).catch();
+        if(newUser.username.includes(phentos.Tag) && !user.roles.cache.has(phentos.kayıtRolleri.tagRolu)){
+             user.roles.add(phentos.kayıtRolleri.tagRolu).catch();
+             if(user.manageable) user.setNickname(user.displayName.replace(phentos.IkinciTag, phentos.Tag)).catch();
+       } else if(!newUser.username.includes(phentos.Tag) && user.roles.cache.has(phentos.kayıtRolleri.tagRolu)){
+             user.roles.remove(phentos.kayıtRolleri.tagRolu).catch();
+             if(user.manageable) user.setNickname(user.displayName.replace(phentos.Tag, phentos.IkinciTag)).catch();
             //log mesajı girilebilir
         }
     }

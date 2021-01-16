@@ -14,6 +14,6 @@ module.exports = {
      */
     onRequest: async function () {    
     console.log(`[${moment().format("YYYY-MM-DD HH:mm:ss")}] Komut dosyaları başarıyla tamamlandı bot aktif edildi.`);
-    client.user.setPresence({ activity: { name: "† Developer by ACAR" }, status: "idle" });
+    client.user.setPresence({ activity: { name: "† Developed By Phentos" }, status: "idle" });
     }
   };
