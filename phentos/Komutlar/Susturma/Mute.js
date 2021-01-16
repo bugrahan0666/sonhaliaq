@@ -31,6 +31,7 @@ module.exports = {
     if(!phentos.Roller.muteHammer.some(rol => message.member.roles.cache.has(rol)) && !message.member.hasPermission('ADMINISTRATOR')) return message.channel.send(`Hata: Bu komutunu kullanabilmek için yeterli yetkiye sahip değilsin.`).then(sil => sil.delete({timeout: 5000}));
 let reawEmbed = new MessageEmbed().setFooter("Reawen ❤️ Phentos").setColor("010000").setTimestamp()  
 let embed = reawEmbed;
+let muteler = cezaDb.get(`susturulma`) || [];
   
 let reawMember = message.mentions.members.first() || message.guild.members.cache.get(args[0]);  
 let süre = args[1]
@@ -61,13 +62,32 @@ const seslimute = mesaj.createReactionCollector(sesli, { time: 10000 });
 const yazilimute = mesaj.createReactionCollector(yazili, { time: 10000 });
 
 yazilimute.on("collect", async sasa => {
-if (!süre) return message.channel.send(embed.setDescription(`Geçerli bir süre belirtmelisin!`))
+    if (!süre) return message.channel.send(embed.setDescription(`Geçerli bir süre belirtmelisin!`))
 mesaj.reactions.removeAll();
 mesaj.react("✅"); //tik emoji id koyabilrsn
 reawMember.roles.add("797445574508412948");
 mesaj.edit(embed.setDescription(`
 ${reawMember} kullanıcısı yazılı kanallarda **${sebep}** sebebiyle susturuldu!
 `))
+   let ceza = {
+      No: cezano,
+      Cezalanan: reawMember.id,
+      Yetkili: message.author.id,
+      Tip: "MUTE",
+      Tur: "Susturulma",
+      Sebep: sebep,
+      AtilanSure: süre,
+      BitisZaman: "Şuan da susturulu",
+      Zaman: Date.now() 
+    };
+  if(reawMember.voice.channel) reawMember.voice.setMute(true).catch();
+    if (!muteler.some(j => j.id == reawMember.id)) {
+      cezaDb.push(`sessusturulma`, {id: reawMember.id,No: cezano, kalkmaZamani: Date.now()+ms(süre)})
+      kDb.add(`k.${message.author.id}.sesmute`, 1);
+      kDb.push(`k.${reawMember.id}.sicil`, ceza);
+      kDb.set(`ceza.${cezano}`, ceza)
+    };
+    cezaNoDb.add(`cezano.${client.sistem.a_SunucuID}`, 1)
 message.guild.channels.cache.get("797445555986759690").send(embed.setDescription(`${reawMember} üyesi ${message.author} tarafından **${sebep}** sebebiyle **yazılı kanallarda** susturuldu!`))
 setTimeout(() => {
 
