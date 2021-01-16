@@ -30,6 +30,7 @@ module.exports = {
 let reawEmbed = new MessageEmbed().setFooter("Reawen ❤️ Phentos").setColor("010000").setTimestamp()  
 let embed = reawEmbed;
 let muteler = cezaDb.get(`susturulma`) || [];
+let mutelers = cezaDb.get(`sessusturulma`) || [];
   
 let reawMember = message.mentions.members.first() || message.guild.members.cache.get(args[0]);  
 let süre = args[1]
@@ -105,7 +106,7 @@ ${reawMember} kullanıcısı sesli kanallarda **${sebep}** sebebiyle susturuldu!
 `))
 message.guild.channels.cache.get("797445555986759690").send(embed.setDescription(`${reawMember} üyesi ${message.author} tarafından **${sebep}** sebebiyle **sesli kanallarda** susturuldu!`))
 if(reawMember.voice.channel) reawMember.voice.setMute(true).catch();
-    if (!muteler.some(j => j.id == reawMember.id)) {
+    if (!mutelers.some(j => j.id == reawMember.id)) {
     let ceza = {
         No: cezano,
         Cezalanan: reawMember.id,
@@ -118,7 +119,7 @@ if(reawMember.voice.channel) reawMember.voice.setMute(true).catch();
         Zaman: Date.now() 
       };
     if(reawMember.voice.channel) reawMember.voice.setMute(true).catch();
-    if (!muteler.some(j => j.id == reawMember.id)) {
+    if (!mutelers.some(j => j.id == reawMember.id)) {
       cezaDb.push(`sessusturulma`, {id: reawMember.id,No: cezano, kalkmaZamani: Date.now()+ms(süre)})
       kDb.add(`k.${message.author.id}.sesmute`, 1);
       kDb.push(`k.${reawMember.id}.sicil`, ceza);
@@ -129,7 +130,6 @@ if(reawMember.voice.channel) reawMember.voice.setMute(true).catch();
 
 reawMember.voice.setMute(false)
       message.channel.send(embed.setDescription(`${reawMember} adlı üyenin mutesi süresi dolduğu için açıldı!`))
-
     }, ms(süre))
 }});
 
