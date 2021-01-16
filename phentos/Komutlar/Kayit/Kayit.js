@@ -44,6 +44,7 @@ module.exports = {
     if(phentos.kadinRolleri.some(kadin => uye.roles.cache.has(kadin))) return message.channel.send(`Hata: Belirlediğiniz üye sunucuda zaten kayıtlı ne için tekrardan kayıt ediyorsun?`).then(sil => sil.delete({timeout: 5000}));
     args = args.filter(a => a !== "" && a !== " ").splice(1);
     let BelirlenenIsim;
+    let erkekRolleri;
     let isim = args.filter(arg => isNaN(arg)).map(arg => arg.charAt(0).replace('i', "İ").toUpperCase()+arg.slice(1)).join(" ");
     let yaş = args.filter(arg => !isNaN(arg))[0] || undefined;
     if(!isim || !yaş) return message.channel.send(`Hata: Lütfen tüm argümanları doldurunuz!  __Örn:__  \`${client.sistem.a_Prefix}kayıt @phentos/ID isim yaş\``).then(sil => sil.delete({timeout: 5000}));
@@ -52,7 +53,9 @@ module.exports = {
         kullaniciverisi.push(`k.${uye.id}.isimler`, {
             Isim: BelirlenenIsim,
             Yetkili: message.author.id,
-            Zaman: Date.now()
+            Zaman: Date.now(),
+            VerilenRoller: erkekRolleri,
+            VerilenRoller2: kadinRolleri
         });
         let phentoskayit = await message.channel.send(embed
             .setDescription(`${uye} isimli kişinin cinsiyetini tepkilerle belirleyin!`)

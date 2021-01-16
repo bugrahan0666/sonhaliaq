@@ -31,8 +31,7 @@ module.exports = {
    */
   onRequest: async function (client, message, args, guild) {
     let embed = new MessageEmbed().setColor('0x2f3136').setFooter(client.altbaslik)
-    if((!Pento2 && !Pento3) || !Pento1) return message.channel.send("Sistemsel hata: Rol bulunamadı veya rol bilgileri girilemedi.").then(sil => sil.delete({timeout: 5000}));
-    if(!Pento1.some(rol => message.member.roles.cache.has(rol)) && !message.member.hasPermission('ADMINISTRATOR')) return message.channel.send(`Hata: Bu komutu kullanabilmek için yeterli yetkiye sahip değilsin.`).then(sil => sil.delete({timeout: 5000}));
+    if(!message.member.roles.cache.has(Pento1) && !message.member.hasPermission('ADMINISTRATOR')) return message.channel.send(`Hata: Bu komutu kullanabilmek için yeterli yetkiye sahip değilsin.`).then(sil => sil.delete({timeout: 5000}));
     let uye = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
     if(!uye) return message.channel.send(`Hata: Lütfen bir üye etiketleyin veya Id giriniz!  __Örn:__  \`${client.sistem.a_Prefix}isim @phentos/ID isim yaş\``).then(sil => sil.delete({timeout: 5000}));
     if (message.member.roles.highest.position <= uye.roles.highest.position) return message.channel.send(`Hata: Belirlediğiniz üye sizden yetkili veya aynı yetkidesiniz.`).then(x => x.delete({timeout: 5000}));
