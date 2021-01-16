@@ -79,11 +79,6 @@ module.exports = {
             await uye.roles.set(kadın)
             message.channel.send(embed.setDescription(`${uye}, adlı üye başarıyla ${message.author}, tarafından **Kadın** olarak kayıt edildi.`)).then(sil => sil.delete({timeout: 15000}));
          } 
-          if(tepki.emoji.id == Ayarlar.KadinTepkiId) {
-            kullanicicinsiyet.push(`isim.${message.guild.id}`, {
-              role: kadinRolleri.id
-            })
-          }
        } if(uye.user.username.includes(Tag1)) uye.roles.add(phentos.tagRolu); 
        if(uye.voice.channel) await uye.voice.setChannel(phentoskanallar.kayitSonrasi);
        message.react("✅"); 

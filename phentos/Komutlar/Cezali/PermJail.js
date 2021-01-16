@@ -6,7 +6,7 @@ const kDb = new qDb.table("aKullanici");
 const moment = require('moment');
 const phentos = client.veri;
 module.exports = {
-    Isim: "permjail",
+    Isim: "jail",
     Komut: ["kalıcıjail","kalıcıcezalı"],
     Kullanim: "kcezalı @phentos/ID <sebep>",
     Aciklama: "Belirlenen üyeyi kalıcı olarak cezalıya atar.",

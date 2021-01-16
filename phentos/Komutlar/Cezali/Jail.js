@@ -1,4 +1,5 @@
 const { GuildMember, MessageEmbed,Client} = require("discord.js");
+const client = require("discord.js")
 const qDb = require("quick.db");
 const cezaDb = new qDb.table("aCezalar");
 const cezaNoDb = new qDb.table("aVeri");
@@ -7,7 +8,7 @@ const moment = require('moment');
 const phentos = client.veri;
 const ms = require('ms');
 module.exports = {
-    Isim: "jail",
+    Isim: "surelijail",
     Komut: ["tempjail","cezalı"],
     Kullanim: "cezalı @phentos/ID <süre> <sebep>",
     Aciklama: "Belirlenen üyeyi belirtilen süre boyunca cezalıya atar.",
